@@ -13,7 +13,7 @@ public class Controller_BaseController : MonoBehaviour {
 	[ReadOnlyAttribute] public GameObject avatar;
 	
 	// The avatar that is used in the begining.
-	[SerializeField] private GameObject startAvatar; 
+	[SerializeField] private GameObject startAvatar = null; 
 	
 	// Rigidbody for the avatar.
 	private Rigidbody avatar_rigidbody;

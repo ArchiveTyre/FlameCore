@@ -380,7 +380,7 @@ public class Core_WordReader {
                  }
              }
          }
-         catch (NullReferenceException e)
+         catch
          {
              return false;
          }
@@ -438,7 +438,7 @@ public class Core_WordReader {
              int i = Int32.Parse(str);
              return (byte)i;
          }
-         catch (FormatException e)
+         catch
          {
 			//WordWriter.safeError("\nWordReader.readInt: NumberFormatException expected byte but found " + str + " ");
 			throw(new FormatException("expected byte but found '" + str + "'"));
@@ -488,7 +488,7 @@ NumberFormatException expected int but found '" + str + "' ");
              long i = Int64.Parse(str);
              return i;
          }
-         catch (FormatException e)
+         catch
          {
  			//WordWriter.safeError("\nWordReader.readInt: NumberFormatException expected long but found " + str + " ");
              throw(new FormatException("expected long but found '" + str + "' "));
@@ -502,7 +502,7 @@ NumberFormatException expected int but found '" + str + "' ");
              float f = Int64.Parse(str);
              return f;
          }
-         catch (FormatException e)
+         catch
          {
 			//WordWriter.safeError("\nWordReader.readFloat: NumberFormatException expected float but found " + str + " ");
              throw(new FormatException("expected float but found '" + str + "' "));
@@ -864,9 +864,8 @@ NumberFormatException expected int but found '" + str + "' ");
              int i = Int32.Parse(str);
              return (i==0)?false:true;
          }
-         catch (FormatException e)
+         catch
          {
-             //WordWriter.safeError("\nWordReader.readInt: NumberFormatException expected long but found " + str + " ");
              throw(new FormatException("expected long but found '" + str + "' "));
          }
 
