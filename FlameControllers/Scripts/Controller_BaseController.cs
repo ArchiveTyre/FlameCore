@@ -13,7 +13,7 @@ public class Controller_BaseController : MonoBehaviour {
 	[ReadOnlyAttribute] public GameObject avatar;
 	
 	// The avatar that is used in the begining.
-	[SerializeField] private GameObject startAvatar = this.g; 
+	[SerializeField] private GameObject startAvatar; 
 	
 	// Rigidbody for the avatar.
 	private Rigidbody avatar_rigidbody;
@@ -37,6 +37,11 @@ public class Controller_BaseController : MonoBehaviour {
 	
 	void Start ()
 	{
+        if (startAvatar == null)
+        {
+            Debug.LogError("Start Avatar not set");
+            startAvatar = gameObject;
+        }
 		
 		// Set the avatar to the "first" avatar.
 		Avatar = startAvatar;
