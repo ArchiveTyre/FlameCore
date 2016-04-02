@@ -52,7 +52,7 @@ public class Core_CustomSpawner : MonoBehaviour {
 
     [Tooltip("Advanced settings for spawner")]
     [SerializeField]
-    private AdvancedSettings advancedSettings;
+    private AdvancedSettings advancedSettings = null;
 
     // Use this for initialization
     void Start()
