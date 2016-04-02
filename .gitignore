@@ -277,5 +277,5 @@ paket-files/
 .idea/
 *.sln.iml
 
-# For 
+# For the c# dlls in the Plugins folder. 
 !Plugins/*

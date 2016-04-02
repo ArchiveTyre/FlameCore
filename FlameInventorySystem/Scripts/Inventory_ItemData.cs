@@ -29,7 +29,6 @@ public class Inventory_ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler
 		
 	}
 	[HideInInspector] public int slotIndex;
-	private Vector2 offset;
 	[HideInInspector] public Inventory_Inventory inv;
 	
 	private Inventory_ItemTooltip tooltip;
@@ -116,14 +115,6 @@ public class Inventory_ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler
 		
 			// If not, then quickly return;
 			return;
-		
-		// Check if there is an item to drag.
-		if (item != null)
-		{
-			
-			// Update the position of draged item.
-			offset = eventData.position - new Vector2(this.transform.position.x, this.transform.position.y);
-		}
 	}
 
 	// Activate the tooltip so it renders.

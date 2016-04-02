@@ -12,7 +12,7 @@ public class Network_Promt : MonoBehaviour, IQuarrier {
 	
 	//[SerializeField] private Gui_QuarryManager guiPromt;
 	
-	[SerializeField] private Quarrier quarry;
+	[SerializeField] private Quarrier quarry = null;
 	
 	//private string textData;
 	[HideInInspector] public Network_Networking network_Networking; 

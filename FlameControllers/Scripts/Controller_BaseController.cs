@@ -16,7 +16,7 @@ public class Controller_BaseController : MonoBehaviour {
 	[SerializeField] private GameObject startAvatar; 
 	
 	// Rigidbody for the avatar.
-	private Rigidbody avatar_rigidbody;
+	protected Rigidbody avatar_rigidbody;
 
 	// the speed of movement.
 	public float movementSpeed = 1f;

@@ -6,12 +6,6 @@ using System;
 
 public class Inventory_ItemSlot : MonoBehaviour, IDropHandler {
 	
-	// The list of items.
-	private List<ItemType> invItems;
-	
-	// The list of slots.
-	private List<GameObject> invSlots;
-	
 	// Where the slot is located.
 	public int slotIndex;
 	
@@ -22,12 +16,6 @@ public class Inventory_ItemSlot : MonoBehaviour, IDropHandler {
 	{
 		// Referances only here for extra performance.
 		inventory = GetComponentInParent<Inventory_Inventory>();
-		
-		// Get the main items list.
-		invItems = inventory.inventoryData.items;
-		
-		// Get the main slots list.
-		invSlots = inventory.GetComponent<Inventory_Inventory>().slots;
 	}
 	
 	// Called on init. We just get some referances.

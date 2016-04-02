@@ -7,9 +7,9 @@ public class Quarrier : MonoBehaviour
 	
 	Stack createData = new Stack ();
 	
-	[SerializeField] private GameObject canvas;
+	[SerializeField] private GameObject canvas = null;
 	
-	[SerializeField] private GameObject promtPrefab;
+	[SerializeField] private GameObject promtPrefab = null;
 	
 	private GameObject quarryObj;
 	

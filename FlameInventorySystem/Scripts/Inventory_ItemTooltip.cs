@@ -3,9 +3,6 @@ using System.Collections;
 using UnityEngine.UI;
 public class Inventory_ItemTooltip : MonoBehaviour {
 
-	Vector3 lastPosition;
-	Rect screenRect;
-
 	private float lastClickTime = 0;
 	// Time between a suposed dubbel click.
 	[SerializeField] private float catchTime = 0.25f;
@@ -28,12 +25,9 @@ public class Inventory_ItemTooltip : MonoBehaviour {
 		
 		// For the text inside tooltip.
 		dataTextObject = tooltip.transform.FindChild("Data").GetComponent<Text>();
-		
-		// Disable the tooltip for now.
-		tooltip.SetActive(false);
-		
-		lastPosition = this.transform.position;
-		screenRect = new Rect(0f, 0f, Screen.width, Screen.height);
+
+        // Disable the tooltip for now.
+        tooltip.SetActive(false);
 	}
 	
 	void Update ()
@@ -51,7 +45,7 @@ public class Inventory_ItemTooltip : MonoBehaviour {
 			}
 			lastClickTime=Time.time;
 		}
-		// Update only necessary if tooltip is enum enabled.
+		// Update only necessary if tooltip is enabled.
 		if (tooltip.activeSelf)
 		{
 				
@@ -60,42 +54,6 @@ public class Inventory_ItemTooltip : MonoBehaviour {
 		}
 		
 	}
-	// Update the tooltip position.
-	/*void Update ()
-	{
-		
-		
-		
-		
-		//Vector3[] objectCorners = new Vector3[4];
-		//objectCorners[0] = new Vector3 (gameObject.transform);
-		
-	
-		
-		this.GetComponent<RectTransform>().GetWorldCorners(objectCorners);
-		bool isObjectOverflowing = false;
- 
-		foreach (Vector3 corner in objectCorners)
-		{
-			if (!screenRect.Contains(corner))
-			{
-				isObjectOverflowing = true;
-				break;
-			}
-		}*/
-		/*if (!screenRect.Contains(transform.position))
-			{
-				isObjectOverflowing = true;
-			}*/
- 
-		/*if (isObjectOverflowing)
-			this.transform.position = lastPosition;
- 
-		lastPosition = this.transform.position;
-     
-		
-		
-	}*/
 	
 	// Show the tooltip as well as store important data.
 	public void Activate(ItemType item)

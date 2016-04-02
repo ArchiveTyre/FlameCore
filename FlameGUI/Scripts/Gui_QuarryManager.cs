@@ -13,7 +13,7 @@ public class Gui_QuarryManager : MonoBehaviour {
 	// The saved inputs
 	private IDictionary<string, GameObject> textInputs = new Dictionary<string, GameObject>();
 
-	private string slug;
+	private string slug = null;
 
 	// Used for adding options.
 	private GameObject areaObject; // Name always "Area"
@@ -24,7 +24,7 @@ public class Gui_QuarryManager : MonoBehaviour {
 	//Stack for querry options
 	Stack quarryOptions = new Stack();
 
-	private string returnValue;
+	//private string returnValue = null;
 
 	[HideInInspector] public IQuarrier creator;
 
@@ -72,7 +72,7 @@ public class Gui_QuarryManager : MonoBehaviour {
 	{
 		print ("CLIIICK!: " + ret);
 		// Set our ret value.
-		returnValue = ret;
+		//returnValue = ret;
 		return;
 	}
 

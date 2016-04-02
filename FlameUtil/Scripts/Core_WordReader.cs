@@ -28,7 +28,7 @@ Converted to C# by Alexander Björkman (www.eit.se/alexander)
 public class Core_WordReader {
 
 
-     int tcpConnectionTimeoutMs=0;
+     //int tcpConnectionTimeoutMs=0;
 
      String inputStr=null;
      int inputStrOffset=0;
