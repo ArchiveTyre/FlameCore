@@ -2,11 +2,17 @@
 using System.Collections;
 
 /*
- * This class is the base of all classes. 
- * It can be used for global configurations 
- * like 2 different types of controlls with the 
- * same avatar and speed.
+ * Controller_ClickType
+ * CopyRight 2016 (c) All rights reserved by Flame___
+ * Description:
+ * - This class is the base of all classes. 
+ * - It can be used for global configurations 
+ * - like 2 different types of controlls with the 
+ * - same avatar and speed.
+ * History:
+ * - Created on April 2 2016 By Alexander Björkman
  */
+
 public class Controller_BaseController : MonoBehaviour {
 
 	// Never ever EVER directly modifie these variables directly. Use the Avatar instead.

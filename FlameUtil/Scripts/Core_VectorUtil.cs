@@ -1,4 +1,15 @@
-﻿using UnityEngine;
+﻿
+/*
+ * Core_VectorUtil
+ * CopyRight 2016 (c) All rights reserved by Flame___
+ * Description:
+ * - This file is a custom spawner.
+ * History:
+ * - Created on April 2 2016 By Alexander Björkman
+ * - Added RandomPositionBetweenPoints April 2 2015 / Alex
+ */
+
+using UnityEngine;
 using System.Collections;
 
 public class Core_VectorUtil {

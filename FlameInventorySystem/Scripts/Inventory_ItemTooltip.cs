@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class Inventory_ItemTooltip : MonoBehaviour {
 
 	private float lastClickTime = 0;
+
 	// Time between a suposed dubbel click.
 	[SerializeField] private float catchTime = 0.25f;
 

@@ -125,8 +125,6 @@ public class Network_Promt : MonoBehaviour, IQuarrier {
 
     public void OnQuarrier(string quarrySlug, string value)
     {
-		
-		// TODO: Remove hard coding!
 		if (value == "read")
 		{
 			string v = quarry.GetTextByReturn("input");

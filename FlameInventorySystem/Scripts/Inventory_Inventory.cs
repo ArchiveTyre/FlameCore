@@ -291,8 +291,6 @@ public class Inventory_InventoryData
 	static public Inventory_InventoryData InventoryGetFromFile (string filePath)
 	{
 		
-		//TODO: Add networking.
-		
 		// Get the data.
 		string fileString = "";
 		

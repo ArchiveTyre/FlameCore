@@ -112,13 +112,6 @@ public class Gui_QuarryManager : MonoBehaviour {
 		return textInputs[returnValue].GetComponent<InputField>().text;
 	}
 	
-	// TODO: Depricate
-	public void AddOption (string titel, string return_value, QuarryItem.Type type)
-	{
-		// Push the values to stack.
-		quarryOptions.Push(new QuarryItem (titel, return_value, type) );
-	}
-	
 	public void AddOption (QuarryItem quarryItem)
 	{
 		quarryOptions.Push(quarryItem);

@@ -2,6 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+ * Core_CustomSpawner
+ * CopyRight 2016 (c) All rights reserved by Flame___
+ * Description:
+ * - This file is a custom spawner.
+ * History:
+ * - Created on April 2 2016 By Alexander Björkman
+ */
+
 public class Core_CustomSpawner : MonoBehaviour {
 
     // Set a header.
@@ -28,35 +37,62 @@ public class Core_CustomSpawner : MonoBehaviour {
     [HideInInspector]
     public float timePassedSinceSpawn = 0f;
 
+    // Objects that are alive that this has spawned.
+    [ReadOnly] public int aliveSpawnedObjects = 0;
+    [ReadOnly] [SerializeField] private int totalSpawns = 0;
+
+    // Advanced settings
+    [System.Serializable]
+    class AdvancedSettings
+    {
+        [Tooltip("The max amount of alive objects this spawner can have at the time. If negativ then infinite")]
+        public int maxSpawnsAliveAtTheTime = -1;
+        public int maxTotalSpawns = -1;
+    }
+
+    [Tooltip("Advanced settings for spawner")]
+    [SerializeField]
+    private AdvancedSettings advancedSettings;
+
     // Use this for initialization
     void Start()
     {
-
+    
     }
 
     // Update is called once per frame
     void  Update()
     {
 
-        // Increase counter.
-        timePassedSinceSpawn += Time.deltaTime;
-
-        // Check if we are allowed to spawn.
-        if (timePassedSinceSpawn > spawnInterval)
+        // Either we don't have a max amount or we have to have less or equals than the max amount. 
+        if ( (advancedSettings.maxSpawnsAliveAtTheTime < 0 || advancedSettings.maxSpawnsAliveAtTheTime > aliveSpawnedObjects) && (advancedSettings.maxTotalSpawns < 0 || advancedSettings.maxTotalSpawns > totalSpawns) )
         {
+            // Increase counter if we need to.
+            timePassedSinceSpawn += Time.deltaTime;
 
-            // Spawn the objects.
-            GameObject spawn = GameObject.Instantiate(spawnObjects[0]);
+            // Check if we are allowed to spawn.
+            if (timePassedSinceSpawn > spawnInterval)
+            {
 
-            // Make sure is on.
-            spawn.SetActive(true);
+                // Spawn the objects.
+                GameObject spawn = GameObject.Instantiate(spawnObjects[0]);
 
-            // Set a new position between point 1 and 2.
-            spawn.transform.position = Core_VectorUtil.RandomPositionBetweenPoints(point1.position, point2.position);
+                Core_SpawnedObject obj = spawn.AddComponent<Core_SpawnedObject>();
+                obj.creator = this;
 
-            // Decrease counter.
-            timePassedSinceSpawn -= spawnInterval;
-        }
+
+                // Make sure is on.
+                spawn.SetActive(true);
+
+                // Set a new position between point 1 and 2.
+                spawn.transform.position = Core_VectorUtil.RandomPositionBetweenPoints(point1.position, point2.position);
+
+                // Increase the total spawned counter.
+                totalSpawns++;
+                // Decrease counter.
+                timePassedSinceSpawn -= spawnInterval;
+            }
+        }  
     }
 
 }

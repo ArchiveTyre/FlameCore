@@ -1,8 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// TODO: Cooler name XD
+/*
+ * Controller_ClickType
+ * CopyRight 2016 (c) All rights reserved by Flame___
+ * Description:
+ * - This file is an implementation of the click type of controllers where you click the way you want to go.
+ * History:
+ * - Created on April 2 2016 By Alexander Björkman
+ */
 
+
+// TODO: Cooler name XD
 public class Controller_ClickType : Controller_BaseController { 
 	
 	// The object that will show where the avatar is headed.
