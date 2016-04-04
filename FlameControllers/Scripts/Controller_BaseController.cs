@@ -40,15 +40,20 @@ public class Controller_BaseController : MonoBehaviour {
 			avatar_rigidbody = avatar.GetComponent<Rigidbody>();
 		}
 	}
+
 	
-	void Start ()
+
+
+	// THIS METHOD MUST BE CALLED AT THE START METHOD OF ANY CONTROLLER IF IT WANTS TO ACCES Avator or avatar_rigidbody
+
+	void OnEnable ()
 	{
-        if (startAvatar == null)
-        {
-            Debug.LogError("Start Avatar not set");
-            startAvatar = gameObject;
-        }
-		
+		if (startAvatar == null)
+		{
+			Debug.LogError("Start Avatar not set");
+			startAvatar = gameObject;
+		}
+
 		// Set the avatar to the "first" avatar.
 		Avatar = startAvatar;
 	}
