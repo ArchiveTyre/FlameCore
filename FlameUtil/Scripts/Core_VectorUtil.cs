@@ -22,6 +22,7 @@ public class Core_VectorUtil {
 		int i = s.GetHashCode();
 		random = new System.Random(i);
 	}
+
 	
 	// Returns an random position between two points.
 	public static Vector3 RandomPositionBetweenPoints (Vector3 a, Vector3 b)
@@ -31,6 +32,26 @@ public class Core_VectorUtil {
 		c.y = (float)random.NextDouble() * (b.y - a.y) + a.y;
 		c.z = (float)random.NextDouble() * (b.z - a.z) + a.z;
 		return c;
+	}
+
+	// Returns an random position between two points.
+	public static Vector2 RandomPositionBetweenPoints (Vector2 a, Vector2 b)
+	{
+		Vector2 c = new Vector2();
+		c.x = (float)random.NextDouble() * (b.x - a.x) + a.x;
+		c.y = (float)random.NextDouble() * (b.y - a.y) + a.y;
+		return c;
+	}
+
+	// Returns the given vector with all values positive
+	public static Vector3 AbsVec (Vector3 v)
+	{
+		return new Vector3 (Mathf.Abs (v.x), Mathf.Abs (v.y), Mathf.Abs (v.z));
+	}
+
+	public static Vector3 AbsVec (Vector2 v)
+	{
+		return new Vector2 (Mathf.Abs (v.x), Mathf.Abs (v.y));
 	}
 	
 }
