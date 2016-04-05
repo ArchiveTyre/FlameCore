@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using System.Collections;
 
 
@@ -102,3 +102,5 @@ public class Controller_FirstPerson : Controller_BaseController
 		return currentSpeed * keyState;	
 	}
 }
+
+*/
