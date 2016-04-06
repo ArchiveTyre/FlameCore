@@ -24,11 +24,11 @@ public class Controller_FirstPerson : Controller_BaseController
 	public float jumpForce = 10;
 	public float currentSpeed = 0;
 
-	[ReadOnlyAttribute] public bool airborne = false; 	// If we are in the air
-	[ReadOnlyAttribute] public bool moving = false;	 	// If we are moving, this is walking running or having something move us
-	[ReadOnlyAttribute] public bool traveling = false; // If we are walking or running
-	[ReadOnlyAttribute] public bool walking = false; 	// If we are walking
-	[ReadOnlyAttribute] public bool running = false;		// If we are running
+	[ShowOnlyAttribute] public bool airborne = false; 	// If we are in the air
+	[ShowOnlyAttribute] public bool moving = false;	 	// If we are moving, this is walking running or having something move us
+	[ShowOnlyAttribute] public bool traveling = false; // If we are walking or running
+	[ShowOnlyAttribute] public bool walking = false; 	// If we are walking
+	[ShowOnlyAttribute] public bool running = false;		// If we are running
 
 	// Use this for initialization
 	void Start () 
