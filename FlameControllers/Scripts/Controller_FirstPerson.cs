@@ -104,3 +104,4 @@ public class Controller_FirstPerson : Controller_BaseController
 		return currentSpeed * keyState;	
 	}
 }
+
