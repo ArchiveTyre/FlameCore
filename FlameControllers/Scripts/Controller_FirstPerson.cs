@@ -69,7 +69,8 @@ public class Controller_FirstPerson : Controller_BaseController
 			}
 		}
 
-		if (rawMoveAmount + avatar_rigidbody.velocity)
+		//if (rawMoveAmount + avatar_rigidbody.velocity)
+		//		return;
 	}
 
 	void Move ()
@@ -104,4 +105,3 @@ public class Controller_FirstPerson : Controller_BaseController
 		return currentSpeed * keyState;	
 	}
 }
-
