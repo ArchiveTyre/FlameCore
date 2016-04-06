@@ -51,9 +51,9 @@ public class Controller_FirstPerson : Controller_BaseController
 		traveling = false;
 		running = false;
 
-		int rawHorMoveAmount = (walkXAxis) ? Mathf.Abs (Input.GetAxisRaw (bindings.horizontalAxis)) : 0;
-		int rawDepthMoveAmount = (walkZAxis) ? Mathf.Abs (Input.GetAxisRaw (bindings.horizontalAxis)) : 0;
-		int rawMoveAmount = rawHorMoveAmount + rawDepthMoveAmount;
+		float rawHorMoveAmount = (walkXAxis) ? Mathf.Abs (Input.GetAxisRaw (bindings.horizontalAxis)) : 0;
+		float rawDepthMoveAmount = (walkZAxis) ? Mathf.Abs (Input.GetAxisRaw (bindings.horizontalAxis)) : 0;
+		float rawMoveAmount = rawHorMoveAmount + rawDepthMoveAmount;
 		// check if we are moving vertically or horizontally
 		if (rawMoveAmount > 0)
 		{
@@ -68,6 +68,8 @@ public class Controller_FirstPerson : Controller_BaseController
 				walking = true;
 			}
 		}
+
+		if (rawMoveAmount + avatar_rigidbody.velocity)
 	}
 
 	void Move ()
