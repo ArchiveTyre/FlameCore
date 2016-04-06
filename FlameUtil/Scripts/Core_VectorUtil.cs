@@ -84,7 +84,7 @@ public class Core_VectorUtil {
             return;
         }
 
-        // We have an actual defined speed
+        // We have an actual defined speed. So a slower (CPU resocures) custom method is needed.
         else
         {
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, speed);

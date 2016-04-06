@@ -43,7 +43,7 @@ public class Core_CustomSpawner : MonoBehaviour {
 
     // Advanced settings
     [System.Serializable]
-    class AdvancedSettings
+    public class AdvancedSettings
     {
         [Tooltip("The max amount of alive objects this spawner can have at the time. If negativ then infinite")]
         public int maxSpawnsAliveAtTheTime = -1;
@@ -51,8 +51,7 @@ public class Core_CustomSpawner : MonoBehaviour {
     }
 
     [Tooltip("Advanced settings for spawner")]
-    [SerializeField]
-    private AdvancedSettings advancedSettings = null;
+    public AdvancedSettings advancedSettings = null;
 
     // Use this for initialization
     void Start()
