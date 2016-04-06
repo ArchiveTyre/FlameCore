@@ -34,12 +34,20 @@ public class Controller_ClickType : Controller_BaseController {
 				if (hit.transform.gameObject != avatar.transform.gameObject)
 				{
 					// Where we clicked. Later set. At first null.
-					Vector3 mapClick;
-					mapClick = hit.point;
-					destinationCursor.transform.position = mapClick;
-					avatar.transform.LookAt(mapClick);
-					float step = movementSpeed * Time.deltaTime;
-					avatar.transform.position = Vector3.MoveTowards(avatar.transform.position, mapClick , step);
+                    Vector3 mapClick = hit.point;
+
+                    // Move the destination cursor.
+                    destinationCursor.transform.position = mapClick;
+
+                    // Calculate a distance to move with.
+                    float step = movementSpeed * Time.deltaTime;
+                    float rotationStep = rotationSpeed * Time.deltaTime;
+
+                    // Rotate.
+                    Core_VectorUtil.LookAtWithSpeed(transform, mapClick, rotationStep);
+
+                    // Move.
+                    avatar.transform.position = Vector3.MoveTowards(avatar.transform.position, mapClick , step);
 				}
 			}
 		
@@ -53,4 +61,5 @@ public class Controller_ClickType : Controller_BaseController {
 		}
 		
 	}
+
 }

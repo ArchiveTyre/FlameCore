@@ -26,7 +26,9 @@ public class Controller_BaseController : MonoBehaviour {
 
 	// the speed of movement.
 	public float movementSpeed = 1f;
-	
+
+    public float rotationSpeed = 1f;
+
 	// Use this to get the Avatar to move. Or set it...
 	public GameObject Avatar
 	{

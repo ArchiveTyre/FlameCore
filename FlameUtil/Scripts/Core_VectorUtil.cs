@@ -11,6 +11,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 public class Core_VectorUtil {
 
@@ -64,4 +65,31 @@ public class Core_VectorUtil {
 	{
 		return v.x + v.y; 
 	}
+
+    // Transform is the object to rotate. And target is the object to look at. 
+    // Speed is the speed to rotate. And if 0 then no rotation and if under 0 then instant.
+    public static void LookAtWithSpeed(Transform transform, Vector3 target, float speed)
+    {
+
+        // No point in continueing!
+        if (speed == 0)
+        {
+            return;
+        }
+
+        // Instant speed!
+        if (speed < 0 )
+        {
+            transform.LookAt(target);
+            return;
+        }
+
+        // We have an actual defined speed
+        else
+        {
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, speed);
+            var rotation = Quaternion.LookRotation(target - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * speed);
+        }
+    }
 }
