@@ -25,7 +25,7 @@ Converted to C# by Alexander Björkman (www.eit.se/alexander)
 
 
 
-public class Core_WordReader {
+public class Flame_WordReader {
 
 
      //int tcpConnectionTimeoutMs=0;
@@ -47,13 +47,13 @@ public class Core_WordReader {
 
 
      // This constructor is to be used by extending classes, it would make little sense to create a WordReader without something to read.
-     public Core_WordReader()
+     public Flame_WordReader()
      {
      }
 
 
      // This is used to read words etc from a string.
-     public Core_WordReader(String str)
+     public Flame_WordReader(String str)
      {
          inputStr=str;
          inputStrOffset=0;
@@ -832,7 +832,7 @@ NumberFormatException expected int but found '" + str + "' ");
      public static int genNumberOfWords(String str)
      {
          int n=0;
-         Core_WordReader wr=new Core_WordReader(str);
+         Flame_WordReader wr=new Flame_WordReader(str);
          while(wr.isOpenAndNotEnd())
          {
              wr.readString();

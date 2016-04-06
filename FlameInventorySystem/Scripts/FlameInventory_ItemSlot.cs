@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using System;
 
-public class Inventory_ItemSlot : MonoBehaviour, IDropHandler {
+public class FlameInventory_ItemSlot : MonoBehaviour, IDropHandler {
 	
 	// Where the slot is located.
 	public int slotIndex;
 	
 	// the referance of the main inventory.
-	Inventory_Inventory inventory;
+	FlameInventory_Inventory inventory;
 	
 	public void ResetRef ()
 	{
 		// Referances only here for extra performance.
-		inventory = GetComponentInParent<Inventory_Inventory>();
+		inventory = GetComponentInParent<FlameInventory_Inventory>();
 	}
 	
 	// Called on init. We just get some referances.
@@ -30,22 +30,22 @@ public class Inventory_ItemSlot : MonoBehaviour, IDropHandler {
 		if (!inventory.isInventoryEditable)
 			return;
 			
-		Inventory_ItemData first = eventData.pointerDrag.GetComponent<Inventory_ItemData>();
-		Inventory_ItemSlot second = this;
+		FlameInventory_ItemData first = eventData.pointerDrag.GetComponent<FlameInventory_ItemData>();
+		FlameInventory_ItemSlot second = this;
 		SwitchSlots (first, second);	
     }
 	
-	public static void SwitchSlots (Inventory_ItemSlot a, Inventory_ItemSlot b)
+	public static void SwitchSlots (FlameInventory_ItemSlot a, FlameInventory_ItemSlot b)
 	{
 		
 		// Get new referance.
-		Inventory_ItemData first = a.GetComponentInChildren<Inventory_ItemData>();
+		FlameInventory_ItemData first = a.GetComponentInChildren<FlameInventory_ItemData>();
 		
 		// Use the referance.
 		SwitchSlots (first, b);
 	}
 	
-	private static void SwitchSlots (Inventory_ItemData a, Inventory_ItemSlot b)
+	private static void SwitchSlots (FlameInventory_ItemData a, FlameInventory_ItemSlot b)
 	{
 		
 		// Get all the data we'll ever need.
@@ -53,13 +53,13 @@ public class Inventory_ItemSlot : MonoBehaviour, IDropHandler {
 		
 		int bIndex = b.slotIndex;
 		
-		Inventory_Inventory aInv = a.inv;
+		FlameInventory_Inventory aInv = a.inv;
 		
-		Inventory_Inventory bInv = b.inventory;
+		FlameInventory_Inventory bInv = b.inventory;
 		
-		Inventory_ItemData aData = a;
+		FlameInventory_ItemData aData = a;
 		
-		Inventory_ItemData bData = b.GetComponentInChildren<Inventory_ItemData>();
+		FlameInventory_ItemData bData = b.GetComponentInChildren<FlameInventory_ItemData>();
 		
 		GameObject aItem = aData.gameObject;
 		

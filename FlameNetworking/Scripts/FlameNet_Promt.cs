@@ -4,7 +4,7 @@ using System.Collections;
 using System.Threading;
 using System;
 
-public class Network_Promt : MonoBehaviour, IQuarrier {
+public class FlameNet_Promt : MonoBehaviour, IQuarrier {
 
 	private Thread networkThread;
 
@@ -12,10 +12,10 @@ public class Network_Promt : MonoBehaviour, IQuarrier {
 	
 	//[SerializeField] private Gui_QuarryManager guiPromt;
 	
-	[SerializeField] private Quarrier quarry = null;
+	[SerializeField] private Flame_Quarrier quarry = null;
 	
 	//private string textData;
-	[HideInInspector] public Network_Networking network_Networking; 
+	[HideInInspector] public FlameNet_Networking network_Networking; 
 
 	// Use this for initialization
 	void Start () {
@@ -50,7 +50,7 @@ public class Network_Promt : MonoBehaviour, IQuarrier {
 	
 	private void ParseCommand (string stringToParse)
 	{
-		Core_WordReader wr = new Core_WordReader (stringToParse);
+		Flame_WordReader wr = new Flame_WordReader (stringToParse);
 		print ("String to parse: "+stringToParse);
 		string cmd = wr.readWord();
 		

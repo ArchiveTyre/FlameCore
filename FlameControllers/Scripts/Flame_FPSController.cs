@@ -1,12 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+ * This controller is a simple first person controller,
+ * with adjustable speed, look and move axises, acceleration and etc. It can 
+ * also Jump and run, and has information such as wether it is moving, in the air, walking, running
+ * turning traveling etc.
+ * 
+ * TODO: Work on Looking, Jumping and Running. Also head bob?!
+ * Work smoother movement, kind of jerky now
+ * Smoth look option?!
+*/
 
 
-public class Controller_FirstPerson : Controller_BaseController
+public class Flame_FPSController : Flame_BaseController
 {
 	// If we can look walk and jump in the different directions
-	public bool lookZAxis = true;
+	public bool lookYAxis = true;
 	public bool lookXAxis = true;
 	public bool walkZAxis = true;
 	public bool walkXAxis = true;
@@ -16,19 +26,21 @@ public class Controller_FirstPerson : Controller_BaseController
 	// the camera which we will be rotating
 	public Camera fpsCam;
 	// the keybindings to use the correct keys
-	public Controller_KeyBindings bindings;
+	public Flame_KeyBindings bindings;
 
 	// speeds for running and accelerating
 	public float runSpeed = 20;
 	public float accelerationSpeed = 5;
 	public float jumpForce = 10;
 	public float currentSpeed = 0;
+	public float lookSpeed = 10;
 
 	[ShowOnlyAttribute] public bool airborne = false; 	// If we are in the air
 	[ShowOnlyAttribute] public bool moving = false;	 	// If we are moving, this is walking running or having something move us
 	[ShowOnlyAttribute] public bool traveling = false; // If we are walking or running
 	[ShowOnlyAttribute] public bool walking = false; 	// If we are walking
 	[ShowOnlyAttribute] public bool running = false;		// If we are running
+	[ShowOnlyAttribute] public bool turning = false;	// if we are moving our mouse to turn/look
 
 	// Use this for initialization
 	void Start () 
@@ -40,6 +52,7 @@ public class Controller_FirstPerson : Controller_BaseController
 	{
 		GetInput ();
 		Move ();
+		Look ();
 	}
 
 	// Gets input and checks if we are moving, walking or running
@@ -67,11 +80,12 @@ public class Controller_FirstPerson : Controller_BaseController
 			{
 				walking = true;
 			}
+			traveling = true;
 		}
 
-		if (rawMoveAmount + Core_VectorUtil.Sum (avatar_rigidbody.velocity) > 0)
+		if (rawMoveAmount + Flame_VectorUtil.Sum (avatar_rigidbody.velocity) > 0)
 		{
-			traveling = true;
+			moving = true;
 		}
 	}
 
@@ -89,9 +103,25 @@ public class Controller_FirstPerson : Controller_BaseController
 		float verMove = GetSpeed (ver) * Time.deltaTime * (walkZAxis ? 1 : 0);
 
 		// the vector which we will be moving by
-		Vector3 moveVector = new Vector3 (horMove, 0, verMove);
+		Vector3 moveVector = horMove * Avatar.transform.right + verMove * Avatar.transform.forward;//new Vector3 (horMove, 0, verMove);
 
-		avatar_rigidbody.MovePosition (Avatar.transform.position + moveVector);
+		// where we want to move to 
+		Vector3 goalPos = Avatar.transform.position + moveVector;
+
+		// move to that destination
+		avatar_rigidbody.MovePosition (goalPos);
+
+	}
+
+	void Look ()
+	{
+		float hor = Input.GetAxis (bindings.xLook) * lookSpeed * Flame_Math.Raw (lookXAxis);
+		float ver = Input.GetAxis (bindings.yLook) * lookSpeed * Flame_Math.Raw (lookYAxis);
+
+		fpsCam.transform.rotation = Quaternion.Euler (fpsCam.transform.rotation.eulerAngles.x, fpsCam.transform.rotation.eulerAngles.y, 0);
+		fpsCam.transform.Rotate (-ver, 0, 0);
+		avatar.transform.Rotate (0, hor, 0);
+	
 	}
 
 	// Parameter is the result form Input.GetAxisRaw (axis). It lerps the movement to get smooth movement speed

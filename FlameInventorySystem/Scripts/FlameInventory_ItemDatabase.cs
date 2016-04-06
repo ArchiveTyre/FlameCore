@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 //using System.Runtime.Serialization;
 
-public class Inventory_ItemDatabase : MonoBehaviour {
+public class FlameInventory_ItemDatabase : MonoBehaviour {
 
 	private List<ItemType> database = new List<ItemType>();
 	private JsonData itemData;

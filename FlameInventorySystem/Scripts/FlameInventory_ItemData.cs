@@ -5,7 +5,7 @@ using System;
 using UnityEngine.UI;
 using System.Text;
 
-public class Inventory_ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class FlameInventory_ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
 	public ItemType item;
 	
@@ -29,19 +29,19 @@ public class Inventory_ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler
 		
 	}
 	[HideInInspector] public int slotIndex;
-	[HideInInspector] public Inventory_Inventory inv;
+	[HideInInspector] public FlameInventory_Inventory inv;
 	
-	private Inventory_ItemTooltip tooltip;
+	private FlameInventory_ItemTooltip tooltip;
 	
 	public void ResetRef ()
 	{
-		inv = GetComponentInParent<Inventory_Inventory>();
+		inv = GetComponentInParent<FlameInventory_Inventory>();
 	}
 	
 	void Start ()
 	{
 		ResetRef();
-		tooltip = inv.GetComponent<Inventory_ItemTooltip>();
+		tooltip = inv.GetComponent<FlameInventory_ItemTooltip>();
 		amountText = gameObject.transform.FindChild("Stack Amount").GetComponent<Text>();
 	}
 	
@@ -150,7 +150,7 @@ public class Inventory_ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler
 					{
 						
 						// We were, remove it!
-						transform.parent.transform.parent.transform.parent.GetComponentInParent<Inventory_Inventory>().DestroyItemAndSlot(item);
+						transform.parent.transform.parent.transform.parent.GetComponentInParent<FlameInventory_Inventory>().DestroyItemAndSlot(item);
 					}
 					
 					// Display was neccesary

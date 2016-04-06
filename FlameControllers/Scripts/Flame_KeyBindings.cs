@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Controller_KeyBindings : MonoBehaviour 
+public class Flame_KeyBindings : MonoBehaviour 
 {
 
 	[Header("Key Bindings")]
@@ -14,6 +14,10 @@ public class Controller_KeyBindings : MonoBehaviour
 	public string verticalAxis = "Vertical";
 	[Tooltip("The button we use to run")]
 	public string runAxis = "Run";
+	[Tooltip("What we use too look in the x axis with")]
+	public string xLook = "Mouse X";
+	[Tooltip("What we use too look in the y axis with")]
+	public string yLook = "Mouse Y";
 
 	// the raw state of an axis when it is pressed
 	[HideInInspector] public int PRESSED = 1;

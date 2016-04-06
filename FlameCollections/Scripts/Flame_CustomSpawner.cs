@@ -11,7 +11,7 @@ using System.Collections.Generic;
  * - Created on April 2 2016 By Alexander Björkman
  */
 
-public class Core_CustomSpawner : MonoBehaviour {
+public class Flame_CustomSpawner : MonoBehaviour {
 
     // Set a header.
     [Header("Spawner Settings")] 
@@ -76,7 +76,7 @@ public class Core_CustomSpawner : MonoBehaviour {
                 // Spawn the objects.
                 GameObject spawn = GameObject.Instantiate(spawnObjects[0]);
 
-                Core_SpawnedObject obj = spawn.AddComponent<Core_SpawnedObject>();
+                Flame_SpawnedObject obj = spawn.AddComponent<Flame_SpawnedObject>();
                 obj.creator = this;
 
 
@@ -84,7 +84,7 @@ public class Core_CustomSpawner : MonoBehaviour {
                 spawn.SetActive(true);
 
                 // Set a new position between point 1 and 2.
-                spawn.transform.position = Core_VectorUtil.RandomPositionBetweenPoints(point1.position, point2.position);
+                spawn.transform.position = Flame_VectorUtil.RandomPositionBetweenPoints(point1.position, point2.position);
 
                 // Increase the total spawned counter.
                 totalSpawns++;

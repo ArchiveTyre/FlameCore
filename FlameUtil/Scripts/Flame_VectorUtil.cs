@@ -13,7 +13,7 @@ using UnityEngine;
 using System.Collections;
 using System.Runtime.CompilerServices;
 
-public class Core_VectorUtil {
+public class Flame_VectorUtil {
 
 	private static System.Random random = new System.Random(123445556);
 	
@@ -71,25 +71,24 @@ public class Core_VectorUtil {
     public static void LookAtWithSpeed(Transform transform, Vector3 target, float speed)
     {
 
-        // No point in continueing!
+        // No point in continuing!
         if (speed == 0)
         {
             return;
         }
 
         // Instant speed!
-        if (speed < 0 )
-        {
-            transform.LookAt(target);
-            return;
-        }
-
+		if (speed < 0)
+		{
+			transform.LookAt (target);
+			return;
+		}
         // We have an actual defined speed. So a slower (CPU resocures) custom method is needed.
         else
         {
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, speed);
-            var rotation = Quaternion.LookRotation(target - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * speed);
+            var goalRotation = Quaternion.LookRotation(target - transform.position);
+			transform.rotation = Quaternion.Slerp(transform.rotation, goalRotation, Time.deltaTime * speed);
         }
     }
 }

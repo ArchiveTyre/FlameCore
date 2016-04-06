@@ -5,13 +5,13 @@ using LitJson;
 using System.Collections.Generic;
 using System.IO;
 
-public class Inventory_Inventory : MonoBehaviour {
+public class FlameInventory_Inventory : MonoBehaviour {
 
 	// If in-game edits are allowed.
 	public bool isInventoryEditable = true;
 
 	GameObject slotPanel;
-	public Inventory_ItemDatabase itemDatabase;
+	public FlameInventory_ItemDatabase itemDatabase;
 	
 	// The item database. If left null then will auto search.
 	
@@ -114,7 +114,7 @@ public class Inventory_Inventory : MonoBehaviour {
 		}
 			
 			// Give it an index.
-			slots[index].GetComponent<Inventory_ItemSlot>().slotIndex = index;
+			slots[index].GetComponent<FlameInventory_ItemSlot>().slotIndex = index;
 			
 			// Set it's parent.
 			slots[index].transform.SetParent(slotPanel.transform);
@@ -143,7 +143,7 @@ public class Inventory_Inventory : MonoBehaviour {
 		{
 
 			//  Get the ItemData through itemToAdd.Slug (Because it gets renamed from Slot to Slug) and it's child no 0.
-			Inventory_ItemData data = slots[coExistorIndex].transform.FindChild(itemToAdd.Slug).GetComponent<Inventory_ItemData>();
+			FlameInventory_ItemData data = slots[coExistorIndex].transform.FindChild(itemToAdd.Slug).GetComponent<FlameInventory_ItemData>();
 			
 			//print (data.name); Did not exist!
 			data.Amount+=quantity;
@@ -165,10 +165,10 @@ public class Inventory_Inventory : MonoBehaviour {
 				GameObject itemObj = Instantiate(inventoryItemPrefab);
 				
 				// Save the new item's data to the item data class.
-                itemObj.GetComponent<Inventory_ItemData>().item = itemToAdd;
+                itemObj.GetComponent<FlameInventory_ItemData>().item = itemToAdd;
                 
 				// Save the index to item data so that we can easily use it.
-				itemObj.GetComponent<Inventory_ItemData>().slotIndex = i;
+				itemObj.GetComponent<FlameInventory_ItemData>().slotIndex = i;
 				
 				// Give the newly created Item container an parent.
 				itemObj.transform.SetParent(slots[i].transform);
@@ -189,7 +189,7 @@ public class Inventory_Inventory : MonoBehaviour {
 				itemObj.name = itemToAdd.Slug;
 				
 				// Store the quantity.
-				slots[i].transform.GetChild (0).GetComponent<Inventory_ItemData>().Amount = quantity;
+				slots[i].transform.GetChild (0).GetComponent<FlameInventory_ItemData>().Amount = quantity;
 				
 				// If we find a slot then break the loop.
 				return i;
@@ -216,7 +216,7 @@ public class Inventory_Inventory : MonoBehaviour {
 			{
 				
 				// If it is, add to quantity the amonut that it is.
-				quantity += slots[i].transform.GetComponentInChildren<Inventory_ItemData>().Amount;
+				quantity += slots[i].transform.GetComponentInChildren<FlameInventory_ItemData>().Amount;
 			}
 		}
 		

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-public class Inventory_ItemTooltip : MonoBehaviour {
+public class FlameInventory_ItemTooltip : MonoBehaviour {
 
 	private float lastClickTime = 0;
 

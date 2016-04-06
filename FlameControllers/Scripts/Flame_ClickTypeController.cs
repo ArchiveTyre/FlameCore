@@ -12,7 +12,7 @@ using System.Collections;
 
 
 // TODO: Cooler name XD
-public class Controller_ClickType : Controller_BaseController { 
+public class Flame_ClickTypeController : Flame_BaseController { 
 	
 	// The object that will show where the avatar is headed.
 	public GameObject destinationCursor;
@@ -44,7 +44,7 @@ public class Controller_ClickType : Controller_BaseController {
                     float rotationStep = rotationSpeed * Time.deltaTime;
 
                     // Rotate.
-                    Core_VectorUtil.LookAtWithSpeed(transform, mapClick, rotationStep);
+                    Flame_VectorUtil.LookAtWithSpeed(transform, mapClick, rotationStep);
 
                     // Move.
                     avatar.transform.position = Vector3.MoveTowards(avatar.transform.position, mapClick , step);

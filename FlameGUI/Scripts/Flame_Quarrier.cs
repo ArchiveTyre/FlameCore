@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class Quarrier : MonoBehaviour
+public class Flame_Quarrier : MonoBehaviour
 {
 	
 	Stack createData = new Stack ();
@@ -13,7 +13,7 @@ public class Quarrier : MonoBehaviour
 	
 	private GameObject quarryObj;
 	
-	/*private*/ /*[SerializeField]*/ private Gui_QuarryManager quarryManager;
+	/*private*/ /*[SerializeField]*/ private Flame_GuiQuarryManager quarryManager;
 	
 	private bool doClose = false; 
 	
@@ -45,7 +45,7 @@ public class Quarrier : MonoBehaviour
 			
 			quarryObj.SetActive (true);
 			
-			quarryManager = quarryObj.GetComponent<Gui_QuarryManager>();
+			quarryManager = quarryObj.GetComponent<Flame_GuiQuarryManager>();
 			
 			//
 			quarryManager.creator = creator;

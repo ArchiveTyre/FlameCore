@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Gui_QuarryManager : MonoBehaviour {
+public class Flame_GuiQuarryManager : MonoBehaviour {
 
 	// The prefab used for adding new options.
 	[SerializeField] private GameObject optionPrefab; 

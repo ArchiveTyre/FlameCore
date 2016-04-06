@@ -10,9 +10,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class Core_SpawnedObject : MonoBehaviour {
+public class Flame_SpawnedObject : MonoBehaviour {
 
-    [ShowOnly] public Core_CustomSpawner creator;
+    [ShowOnly] public Flame_CustomSpawner creator;
 
 	// Use this for initialization
 	void Start () {

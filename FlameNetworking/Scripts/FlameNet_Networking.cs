@@ -4,7 +4,7 @@ using System.IO;
 using System.Net.Sockets;
 
 
-public class Network_Networking : MonoBehaviour {
+public class FlameNet_Networking : MonoBehaviour {
 	
 	// The client tcp.
 	private TcpClient tcpclnt = new TcpClient();
@@ -19,7 +19,7 @@ public class Network_Networking : MonoBehaviour {
 	private StreamWriter netSw;
 	
 	// Network GUI promt.
-	public Network_Promt network_Promt;
+	public FlameNet_Promt network_Promt;
 	
 	// The socket of the network.
 	private Socket netSo;
@@ -97,7 +97,7 @@ public class Network_Networking : MonoBehaviour {
 		if (replyString!=null)
 		{
 			// Create new word reader
-			Core_WordReader wr = new Core_WordReader (replyString);
+			Flame_WordReader wr = new Flame_WordReader (replyString);
 			string command = wr.readWord();
 			if (command == "qp")
 			{

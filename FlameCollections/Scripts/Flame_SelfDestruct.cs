@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Core_SelfDestruct : MonoBehaviour {
+public class Flame_SelfDestruct : MonoBehaviour {
 
     [Tooltip("How long untill self destruct in seconds, If -1 then will never explode")]
     public float fuseTime = 3f;

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Inventory_ExtendedInventory : Inventory_Inventory {
+public class FlameInventory_ExtendedInventory : FlameInventory_Inventory {
 
 
 	void Start()

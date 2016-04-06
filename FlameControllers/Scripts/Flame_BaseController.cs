@@ -13,7 +13,7 @@ using System.Collections;
  * - Created on April 2 2016 By Alexander Björkman
  */
 
-public class Controller_BaseController : MonoBehaviour {
+public class Flame_BaseController : MonoBehaviour {
 
 	// Never ever EVER directly modifie these variables directly. Use the Avatar instead.
 	[ShowOnly] public GameObject avatar;
