@@ -16,7 +16,7 @@ using System.Collections;
 public class Controller_BaseController : MonoBehaviour {
 
 	// Never ever EVER directly modifie these variables directly. Use the Avatar instead.
-	[ReadOnlyAttribute] public GameObject avatar;
+	[ShowOnly] public GameObject avatar;
 	
 	// The avatar that is used in the begining.
 	[SerializeField] private GameObject startAvatar; 

@@ -7,7 +7,7 @@ public class Core_SelfDestruct : MonoBehaviour {
     public float fuseTime = 3f;
 
     [Tooltip("How long has this object been alive in seconds.")]
-    [ReadOnly] [SerializeField] private float lifeTime = 0f;
+    [ShowOnly] [SerializeField] private float lifeTime = 0f;
 
     // Should it be Fixed?
     void Update()
@@ -24,6 +24,17 @@ public class Core_SelfDestruct : MonoBehaviour {
 
     void Destruct()
     {
+
+        // Are there any objects that want to be notified?
+        ISelfDestructor[] selfDestructors;
+        selfDestructors = gameObject.GetComponents<ISelfDestructor>();
+        foreach (ISelfDestructor dest in selfDestructors)
+        {
+            // There is one!
+            dest.OnSelfDestruct();
+        }
+
+        // Kill the objects.
         Destroy(gameObject);
     }
 }

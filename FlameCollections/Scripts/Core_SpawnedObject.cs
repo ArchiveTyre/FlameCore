@@ -12,7 +12,7 @@ using System.Collections;
 
 public class Core_SpawnedObject : MonoBehaviour {
 
-    [ReadOnly] public Core_CustomSpawner creator;
+    [ShowOnly] public Core_CustomSpawner creator;
 
 	// Use this for initialization
 	void Start () {

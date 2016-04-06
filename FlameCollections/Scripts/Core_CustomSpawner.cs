@@ -38,8 +38,8 @@ public class Core_CustomSpawner : MonoBehaviour {
     public float timePassedSinceSpawn = 0f;
 
     // Objects that are alive that this has spawned.
-    [ReadOnly] public int aliveSpawnedObjects = 0;
-    [ReadOnly] [SerializeField] private int totalSpawns = 0;
+    [ShowOnly] public int aliveSpawnedObjects = 0;
+    [ShowOnly] [SerializeField] private int totalSpawns = 0;
 
     // Advanced settings
     [System.Serializable]
