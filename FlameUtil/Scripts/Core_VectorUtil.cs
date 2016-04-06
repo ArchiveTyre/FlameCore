@@ -53,5 +53,15 @@ public class Core_VectorUtil {
 	{
 		return new Vector2 (Mathf.Abs (v.x), Mathf.Abs (v.y));
 	}
-	
+
+	// Simply adds up the vectors axises
+	public static float Sum (Vector3 v)
+	{
+		return v.x + v.y + v.z; 
+	}
+
+	public static float Sum (Vector2 v)
+	{
+		return v.x + v.y; 
+	}
 }

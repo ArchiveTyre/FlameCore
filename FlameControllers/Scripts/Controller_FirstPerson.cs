@@ -69,12 +69,17 @@ public class Controller_FirstPerson : Controller_BaseController
 			}
 		}
 
-		//if (rawMoveAmount + avatar_rigidbody.velocity)
-		//		return;
+		if (rawMoveAmount + Core_VectorUtil.Sum (avatar_rigidbody.velocity) > 0)
+		{
+			traveling = true;
+		}
 	}
 
 	void Move ()
 	{
+		// Reset velocity
+		avatar_rigidbody.velocity = new Vector3 (0, avatar_rigidbody.velocity.y, 0);
+
 		// get input
 		float hor = Input.GetAxisRaw (bindings.horizontalAxis);
 		float ver = Input.GetAxisRaw (bindings.verticalAxis);
@@ -86,7 +91,7 @@ public class Controller_FirstPerson : Controller_BaseController
 		// the vector which we will be moving by
 		Vector3 moveVector = new Vector3 (horMove, 0, verMove);
 
-		avatar_rigidbody.AddForce (moveVector, ForceMode.Impulse);
+		avatar_rigidbody.MovePosition (Avatar.transform.position + moveVector);
 	}
 
 	// Parameter is the result form Input.GetAxisRaw (axis). It lerps the movement to get smooth movement speed
