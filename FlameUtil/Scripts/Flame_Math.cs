@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Flame_Maths : MonoBehaviour 
+public class Flame_Math 
 {
 	public static int Raw (bool b)
 	{

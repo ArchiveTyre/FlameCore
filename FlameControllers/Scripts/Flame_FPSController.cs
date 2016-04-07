@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 /*
  * This controller is a simple first person controller,
  * with adjustable speed, look and move axises, acceleration and etc. It can 
@@ -24,9 +23,7 @@ public class Flame_FPSController : Flame_BaseController
 	public bool canRun = true;
 
 	// the camera which we will be rotating
-	public Camera fpsCam;
-	// the keybindings to use the correct keys
-	public Flame_KeyBindings bindings;
+	
 
 	// speeds for running and accelerating
 	public float runSpeed = 20;
@@ -118,8 +115,8 @@ public class Flame_FPSController : Flame_BaseController
 		float hor = Input.GetAxis (bindings.xLook) * lookSpeed * Flame_Math.Raw (lookXAxis);
 		float ver = Input.GetAxis (bindings.yLook) * lookSpeed * Flame_Math.Raw (lookYAxis);
 
-		fpsCam.transform.rotation = Quaternion.Euler (fpsCam.transform.rotation.eulerAngles.x, fpsCam.transform.rotation.eulerAngles.y, 0);
-		fpsCam.transform.Rotate (-ver, 0, 0);
+        avatarCamera.transform.rotation = Quaternion.Euler (avatarCamera.transform.rotation.eulerAngles.x, avatarCamera.transform.rotation.eulerAngles.y, 0);
+        avatarCamera.transform.Rotate (-ver, 0, 0);
 		avatar.transform.Rotate (0, hor, 0);
 	
 	}
