@@ -12,19 +12,20 @@ using System.Collections;
 
 public class Flame_SpawnedObject : MonoBehaviour {
 
-    [ShowOnly] public Flame_CustomSpawner creator;
+    [ShowOnly] public Flame_SpawnerBase creator;
 
-	// Use this for initialization
+	// To keep tract of spawns!
 	void Start () {
-        creator.aliveSpawnedObjects++;
+
+        // Increase values.
+        creator.advancedSettings.aliveSpawnedObjects++;
+        creator.advancedSettings.totalSpawns++; // We place it here instead of in the spawner itself to assure that the spawn is actually succesful.
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
     
     void OnDestroy() {
-        creator.aliveSpawnedObjects--;
+
+        // Make sure creator is still alive!
+        if (creator)
+            creator.advancedSettings.aliveSpawnedObjects--;
     }
 }
