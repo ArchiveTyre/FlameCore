@@ -23,17 +23,22 @@ public class Flame_FPSController : Flame_BaseController
 	public bool canJump = true;
 	public bool canRun = true;
 
-	// the camera which we will be rotating
+	// The camera which we will be rotating
 	public Camera fpsCam;
 	// the keybindings to use the correct keys
 	public Flame_KeyBindings bindings;
 
-	// speeds for running and accelerating
+	// Speeds for running and accelerating
 	public float runSpeed = 20;
 	public float accelerationSpeed = 5;
 	public float jumpForce = 10;
 	public float currentSpeed = 0;
 	public float lookSpeed = 10;
+
+	// Rotation constraints in the x axis (pitch)
+	public float pitchMax = 360;
+	public float pitchMin = 0;
+
 
 	[ShowOnlyAttribute] public bool airborne = false; 	// If we are in the air
 	[ShowOnlyAttribute] public bool moving = false;	 	// If we are moving, this is walking running or having something move us
@@ -119,8 +124,13 @@ public class Flame_FPSController : Flame_BaseController
 		float ver = Input.GetAxis (bindings.yLook) * lookSpeed * Flame_Math.Raw (lookYAxis);
 
 		fpsCam.transform.rotation = Quaternion.Euler (fpsCam.transform.rotation.eulerAngles.x, fpsCam.transform.rotation.eulerAngles.y, 0);
+
+
 		fpsCam.transform.Rotate (-ver, 0, 0);
 		avatar.transform.Rotate (0, hor, 0);
+
+
+
 	
 	}
 
@@ -138,5 +148,17 @@ public class Flame_FPSController : Flame_BaseController
 		}
 		// return the speed * the keystate so that if keyState = -1 we do not move forward, but in the opposite direction
 		return currentSpeed * keyState;	
+	}
+
+	public GameObject GetLookObject (float maxDist)
+	{
+		// the object that we look at's data
+		RaycastHit hit;
+
+		if (Physics.Raycast (fpsCam.transform.position, fpsCam.transform.forward, out hit, maxDist))
+		{
+			return hit.transform.gameObject;
+		}
+		return null;
 	}
 }
