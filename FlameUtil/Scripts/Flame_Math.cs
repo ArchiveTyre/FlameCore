@@ -13,4 +13,19 @@ public class Flame_Math
 	{
 		return (o) ? 1 : 0;
 	}
+
+	// Takes a number and returns it in base 360
+	public static float Base360 (float n)
+	{
+		while (n >= 360)
+		{
+			n -= 360;
+		} 
+		while (n <= 0)
+		{
+			n += 360;
+		}
+
+		return n;
+	}
 }

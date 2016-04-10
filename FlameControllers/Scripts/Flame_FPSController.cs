@@ -24,9 +24,6 @@ public class Flame_FPSController : Flame_BaseController
 
 	// The camera which we will be rotating
 	public Camera fpsCam;
-	// the keybindings to use the correct keys
-	public Flame_KeyBindings bindings;
-
 
 	// Speeds for running and accelerating
 	public float runSpeed = 20;
@@ -47,11 +44,16 @@ public class Flame_FPSController : Flame_BaseController
 	[ShowOnlyAttribute] public bool running = false;		// If we are running
 	[ShowOnlyAttribute] public bool turning = false;	// if we are moving our mouse to turn/look
 
+
+	private float rotationX = 0;
+
+
 	// Use this for initialization
 	void Start () 
 	{
+		rotationX = avatarCamera.transform.localRotation.eulerAngles.x;
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -123,20 +125,41 @@ public class Flame_FPSController : Flame_BaseController
 		float hor = Input.GetAxis (bindings.xLook) * lookSpeed * Flame_Math.Raw (lookXAxis);
 		float ver = Input.GetAxis (bindings.yLook) * lookSpeed * Flame_Math.Raw (lookYAxis);
 
-<<<<<<< HEAD
-		fpsCam.transform.rotation = Quaternion.Euler (fpsCam.transform.rotation.eulerAngles.x, fpsCam.transform.rotation.eulerAngles.y, 0);
+		Vector3 camRot = avatarCamera.transform.rotation.eulerAngles;
+		Vector3 avatarRot = avatar.transform.eulerAngles;
 
+		rotationX += -ver;
+		rotationX = ClampPitch (rotationX);
+		avatarCamera.transform.localRotation = Quaternion.Euler (rotationX, avatarRot.y, avatarRot.z);
 
-		fpsCam.transform.Rotate (-ver, 0, 0);
-=======
-        avatarCamera.transform.rotation = Quaternion.Euler (avatarCamera.transform.rotation.eulerAngles.x, avatarCamera.transform.rotation.eulerAngles.y, 0);
-        avatarCamera.transform.Rotate (-ver, 0, 0);
->>>>>>> e9aaea753b1aea5330041c78ffaecdd28d593c9d
 		avatar.transform.Rotate (0, hor, 0);
+	}
 
+	bool RotationOutOfBounds (float pitch)
+	{
+		if (pitch > pitchMax || pitch < pitchMin)
+		{
+			return true;
+		}
+		return false;
+	}
 
+	float ClampRotations(float pitchMove)
+	{
+		Vector3 rot = avatarCamera.transform.localRotation.eulerAngles;
+		float pitch = rot.x;
+		pitch = Mathf.Clamp (pitch, pitchMin, pitchMax);
+		//avatarCamera.transform.localRotation = Quaternion.Euler (pitch, rot.y, rot.z);
+		return pitch;
+	}
 
-	
+	float ClampPitch (float angle)
+	{
+		if (angle < -360F)
+		angle += 360F;
+		if (angle > 360F)
+			angle -= 360F;
+		return Mathf.Clamp (angle, pitchMin, pitchMax);
 	}
 
 	// Parameter is the result form Input.GetAxisRaw (axis). It lerps the movement to get smooth movement speed
@@ -154,16 +177,5 @@ public class Flame_FPSController : Flame_BaseController
 		// return the speed * the keystate so that if keyState = -1 we do not move forward, but in the opposite direction
 		return currentSpeed * keyState;	
 	}
-
-	public GameObject GetLookObject (float maxDist)
-	{
-		// the object that we look at's data
-		RaycastHit hit;
-
-		if (Physics.Raycast (fpsCam.transform.position, fpsCam.transform.forward, out hit, maxDist))
-		{
-			return hit.transform.gameObject;
-		}
-		return null;
-	}
+		
 }
