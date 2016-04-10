@@ -39,7 +39,7 @@ public class Flame_BaseController : MonoBehaviour {
     public float rotationSpeed = 1f;
 
 	// Use this to get the Avatar to move. Or set it...
-	public GameObject Avatar
+	[HideInInspector] public GameObject Avatar
 	{
 		get
 		{

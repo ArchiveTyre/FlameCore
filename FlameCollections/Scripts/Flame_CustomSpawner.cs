@@ -6,7 +6,10 @@ using System.Collections.Generic;
  * Flame_CustomSpawner
  * CopyRight 2016 (c) All rights reserved by Flame___
  * Description:
- * - This file is a custom spawner.
+ * - This file is a custom spawner with position
+ 
+    
+    .
  * History:
  * - Created on April 2 2016 By Alexander Björkman
  */
@@ -26,10 +29,7 @@ public class Flame_CustomSpawner : Flame_SpawnerBase {
     {
 
         // Either we don't have a max amount or we have to have less or equals than the max amount. 
-        if ( (advancedSettings.maxSpawnsAliveAtTheTime < 0 
-            || advancedSettings.maxSpawnsAliveAtTheTime > advancedSettings.aliveSpawnedObjects) 
-            && (advancedSettings.maxTotalSpawns < 0 
-                || advancedSettings.maxTotalSpawns > advancedSettings.totalSpawns) )
+        if (IsEmptyEnoughForSpawn())
         {
             // Increase counter if we need to.
             advancedSettings.timePassedSinceSpawn += Time.deltaTime;

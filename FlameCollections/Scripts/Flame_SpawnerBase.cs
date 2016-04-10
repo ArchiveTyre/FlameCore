@@ -55,13 +55,15 @@ public class Flame_SpawnerBase : MonoBehaviour {
     // Name could be more like advancedSettingsAndData. But we can't change the name to only settings in the inspector.
     public AdvancedSettingsAndData advancedSettings = null;
 
-    public bool CanSpawn()
+    public bool IsEmptyEnoughForSpawn()
     {
-        if ((advancedSettings.maxSpawnsAliveAtTheTime < 0
+        if (
+            (advancedSettings.maxSpawnsAliveAtTheTime < 0
             || advancedSettings.maxSpawnsAliveAtTheTime > advancedSettings.aliveSpawnedObjects)
 
             && (advancedSettings.maxTotalSpawns < 0
-            || advancedSettings.maxTotalSpawns > advancedSettings.totalSpawns))
+            || advancedSettings.maxTotalSpawns > advancedSettings.totalSpawns)
+           )
         {
             return true;
         }
@@ -73,8 +75,7 @@ public class Flame_SpawnerBase : MonoBehaviour {
     {
 
         // Check if we are allowed to spawn.
-        if (advancedSettings.timePassedSinceSpawn >= spawnInterval
-            && advancedSettings.maxTotalSpawns >= advancedSettings.totalSpawns)
+        if (IsEmptyEnoughForSpawn() && advancedSettings.timePassedSinceSpawn >= spawnInterval )
         {
             // Spawn the objects.
             GameObject spawn = GameObject.Instantiate(spawnObjects[0]);
