@@ -4,14 +4,16 @@ using System.Collections;
  * This controller is a simple first person controller,
  * with adjustable speed, look and move axises, acceleration and etc. It can 
  * also Jump and run, and has information such as wether it is moving, in the air, walking, running
- * turning traveling etc.
+ * turning traveling etc. 
+ * 
+ * This 
  * 
  * TODO: Work on Looking, Jumping and Running. Also head bob?!
  * Work smoother movement, kind of jerky now
  * Smoth look option?!
 */
 
-
+[RequireComponent(typeof (Flame_CollisionRegistry), typeof (Rigidbody), typeof (Flame_KeyBindings))]
 public class Flame_FPSController : Flame_BaseController
 {
 	// If we can look walk and jump in the different directions
@@ -22,8 +24,17 @@ public class Flame_FPSController : Flame_BaseController
 	public bool canJump = true;
 	public bool canRun = true;
 
-	// The camera which we will be rotating
-	public Camera fpsCam;
+
+	// Collision Registry
+	private Flame_CollisionRegistry registry;
+
+	public Flame_CollisionRegistry Registry
+	{
+		get
+		{
+			return registry;
+		}
+	}
 
 	// Speeds for running and accelerating
 	public float runSpeed = 20;
@@ -35,6 +46,7 @@ public class Flame_FPSController : Flame_BaseController
 	// Rotation constraints in the x axis (pitch)
 	public float pitchMax = 360;
 	public float pitchMin = 0;
+
 
 
 	[ShowOnlyAttribute] public bool airborne = false; 	// If we are in the air
@@ -52,6 +64,7 @@ public class Flame_FPSController : Flame_BaseController
 	void Start () 
 	{
 		rotationX = avatarCamera.transform.localRotation.eulerAngles.x;
+		registry = GetComponent <Flame_CollisionRegistry> ();
 	}
 
 	// Update is called once per frame
@@ -60,6 +73,7 @@ public class Flame_FPSController : Flame_BaseController
 		GetInput ();
 		Move ();
 		Look ();
+		AirMotion ();
 	}
 
 	// Gets input and checks if we are moving, walking or running
@@ -96,6 +110,7 @@ public class Flame_FPSController : Flame_BaseController
 		}
 	}
 
+	// move the avatar
 	void Move ()
 	{
 		// Reset velocity
@@ -120,6 +135,7 @@ public class Flame_FPSController : Flame_BaseController
 
 	}
 
+	// rotate the avatar and the avatar camera based on look movement
 	void Look ()
 	{
 		float hor = Input.GetAxis (bindings.xLook) * lookSpeed * Flame_Math.Raw (lookXAxis);
@@ -130,10 +146,32 @@ public class Flame_FPSController : Flame_BaseController
 
 		rotationX += -ver;
 		rotationX = ClampPitch (rotationX);
+		print(rotationX);
 		avatarCamera.transform.localRotation = Quaternion.Euler (rotationX, avatarRot.y, avatarRot.z);
 
 		avatar.transform.Rotate (0, hor, 0);
 	}
+
+	// Check if we are airborne, and if we are pressing the jump key
+	void AirMotion ()
+	{
+		airborne = !registry.IsColliding ();
+
+		if (!airborne)
+		{
+			if (Input.GetAxisRaw (bindings.jumpAxis) == bindings.PRESSED && canJump)
+			{
+				Jump ();
+			}
+		}
+	
+	}
+
+	void Jump ()
+	{
+		avatar_rigidbody.AddForce (0, jumpForce, 0, ForceMode.Impulse);
+	}
+
 
 	bool RotationOutOfBounds (float pitch)
 	{
