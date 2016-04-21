@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Flame_TPSController : MonoBehaviour 
+public class Flame_TPSController : Flame_BaseController 
 {
 	// If we can look walk and jump in the different directions
 	public bool lookXAxis = true;
@@ -10,8 +10,6 @@ public class Flame_TPSController : MonoBehaviour
 	public bool canJump = true;
 	public bool canRun = true;
 
-	// the camera which we will be rotating
-	public Camera tpsCam;
 	// the keybindings to use the correct keys
 	public Flame_KeyBindings bindings;
 
@@ -19,6 +17,8 @@ public class Flame_TPSController : MonoBehaviour
 	public float runSpeed = 20;
 	public float accelerationSpeed = 5;
 	public float jumpForce = 10;
+	public float rotateSpeed = 5;
+
 	[ShowOnlyAttribute] public float currentSpeed = 0;
 
 	[ShowOnlyAttribute] public bool airborne = false; 	// If we are in the air
@@ -29,12 +29,27 @@ public class Flame_TPSController : MonoBehaviour
 
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start () 
+	{
+		
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () 
+	{
+		Move ();
+		Look ();
 	}
+
+	void Move ()
+	{
+		
+	}
+
+	void Look ()
+	{
+		
+	}
+
+
 }

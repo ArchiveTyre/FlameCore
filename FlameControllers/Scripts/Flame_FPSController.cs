@@ -49,6 +49,7 @@ public class Flame_FPSController : Flame_BaseController
 
 
 
+
 	[ShowOnlyAttribute] public bool airborne = false; 	// If we are in the air
 	[ShowOnlyAttribute] public bool moving = false;	 	// If we are moving, this is walking running or having something move us
 	[ShowOnlyAttribute] public bool traveling = false; // If we are walking or running
@@ -124,15 +125,15 @@ public class Flame_FPSController : Flame_BaseController
 		float horMove = GetSpeed (hor) * Time.deltaTime * (walkXAxis ? 1 : 0);
 		float verMove = GetSpeed (ver) * Time.deltaTime * (walkZAxis ? 1 : 0);
 
-		// the vector which we will be moving by
-		Vector3 moveVector = horMove * Avatar.transform.right + verMove * Avatar.transform.forward;//new Vector3 (horMove, 0, verMove);
+		/////////////////// This variable needs to be converted to local space, somet1hing seems wrong
+		// the vector which we will be moving by 
+		Vector3 moveVector = Avatar.transform.right * horMove;//verMove * Avatar.transform.right + horMove * Avatar.transform.forward;
 
 		// where we want to move to 
 		Vector3 goalPos = Avatar.transform.position + moveVector;
 
 		// move to that destination
 		avatar_rigidbody.MovePosition (goalPos);
-
 	}
 
 	// rotate the avatar and the avatar camera based on look movement
@@ -146,17 +147,16 @@ public class Flame_FPSController : Flame_BaseController
 
 		rotationX += -ver;
 		rotationX = ClampPitch (rotationX);
-		print(rotationX);
 		avatarCamera.transform.localRotation = Quaternion.Euler (rotationX, avatarRot.y, avatarRot.z);
-
+		print (avatarCamera.transform.rotation.eulerAngles.x);
 		avatar.transform.Rotate (0, hor, 0);
 	}
 
 	// Check if we are airborne, and if we are pressing the jump key
 	void AirMotion ()
 	{
-		airborne = !registry.IsColliding ();
-
+		airborne = Flame_VectorUtil.CloseTo (avatar_rigidbody.velocity, Vector3.zero, 0.05f);
+		print (registry.IsColliding (false));
 		if (!airborne)
 		{
 			if (Input.GetAxisRaw (bindings.jumpAxis) == bindings.PRESSED && canJump)
