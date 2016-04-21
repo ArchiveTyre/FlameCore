@@ -4,14 +4,16 @@ using System.Collections;
  * This controller is a simple first person controller,
  * with adjustable speed, look and move axises, acceleration and etc. It can 
  * also Jump and run, and has information such as wether it is moving, in the air, walking, running
- * turning traveling etc.
+ * turning traveling etc. 
+ * 
+ * This 
  * 
  * TODO: Work on Looking, Jumping and Running. Also head bob?!
  * Work smoother movement, kind of jerky now
  * Smoth look option?!
 */
 
-
+[RequireComponent(typeof (Flame_CollisionRegistry), typeof (Rigidbody), typeof (Flame_KeyBindings))]
 public class Flame_FPSController : Flame_BaseController
 {
 	// If we can look walk and jump in the different directions
@@ -22,15 +24,30 @@ public class Flame_FPSController : Flame_BaseController
 	public bool canJump = true;
 	public bool canRun = true;
 
-	// the camera which we will be rotating
-	
 
-	// speeds for running and accelerating
+	// Collision Registry
+	private Flame_CollisionRegistry registry;
+
+	public Flame_CollisionRegistry Registry
+	{
+		get
+		{
+			return registry;
+		}
+	}
+
+	// Speeds for running and accelerating
 	public float runSpeed = 20;
 	public float accelerationSpeed = 5;
 	public float jumpForce = 10;
 	public float currentSpeed = 0;
 	public float lookSpeed = 10;
+
+	// Rotation constraints in the x axis (pitch)
+	public float pitchMax = 360;
+	public float pitchMin = 0;
+
+
 
 	[ShowOnlyAttribute] public bool airborne = false; 	// If we are in the air
 	[ShowOnlyAttribute] public bool moving = false;	 	// If we are moving, this is walking running or having something move us
@@ -39,17 +56,24 @@ public class Flame_FPSController : Flame_BaseController
 	[ShowOnlyAttribute] public bool running = false;		// If we are running
 	[ShowOnlyAttribute] public bool turning = false;	// if we are moving our mouse to turn/look
 
+
+	private float rotationX = 0;
+
+
 	// Use this for initialization
 	void Start () 
 	{
+		rotationX = avatarCamera.transform.localRotation.eulerAngles.x;
+		registry = GetComponent <Flame_CollisionRegistry> ();
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
 		GetInput ();
 		Move ();
 		Look ();
+		AirMotion ();
 	}
 
 	// Gets input and checks if we are moving, walking or running
@@ -86,6 +110,7 @@ public class Flame_FPSController : Flame_BaseController
 		}
 	}
 
+	// move the avatar
 	void Move ()
 	{
 		// Reset velocity
@@ -110,15 +135,69 @@ public class Flame_FPSController : Flame_BaseController
 
 	}
 
+	// rotate the avatar and the avatar camera based on look movement
 	void Look ()
 	{
 		float hor = Input.GetAxis (bindings.xLook) * lookSpeed * Flame_Math.Raw (lookXAxis);
 		float ver = Input.GetAxis (bindings.yLook) * lookSpeed * Flame_Math.Raw (lookYAxis);
 
-        avatarCamera.transform.rotation = Quaternion.Euler (avatarCamera.transform.rotation.eulerAngles.x, avatarCamera.transform.rotation.eulerAngles.y, 0);
-        avatarCamera.transform.Rotate (-ver, 0, 0);
+		Vector3 camRot = avatarCamera.transform.rotation.eulerAngles;
+		Vector3 avatarRot = avatar.transform.eulerAngles;
+
+		rotationX += -ver;
+		rotationX = ClampPitch (rotationX);
+		print(rotationX);
+		avatarCamera.transform.localRotation = Quaternion.Euler (rotationX, avatarRot.y, avatarRot.z);
+
 		avatar.transform.Rotate (0, hor, 0);
+	}
+
+	// Check if we are airborne, and if we are pressing the jump key
+	void AirMotion ()
+	{
+		airborne = !registry.IsColliding ();
+
+		if (!airborne)
+		{
+			if (Input.GetAxisRaw (bindings.jumpAxis) == bindings.PRESSED && canJump)
+			{
+				Jump ();
+			}
+		}
 	
+	}
+
+	void Jump ()
+	{
+		avatar_rigidbody.AddForce (0, jumpForce, 0, ForceMode.Impulse);
+	}
+
+
+	bool RotationOutOfBounds (float pitch)
+	{
+		if (pitch > pitchMax || pitch < pitchMin)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	float ClampRotations(float pitchMove)
+	{
+		Vector3 rot = avatarCamera.transform.localRotation.eulerAngles;
+		float pitch = rot.x;
+		pitch = Mathf.Clamp (pitch, pitchMin, pitchMax);
+		//avatarCamera.transform.localRotation = Quaternion.Euler (pitch, rot.y, rot.z);
+		return pitch;
+	}
+
+	float ClampPitch (float angle)
+	{
+		if (angle < -360F)
+		angle += 360F;
+		if (angle > 360F)
+			angle -= 360F;
+		return Mathf.Clamp (angle, pitchMin, pitchMax);
 	}
 
 	// Parameter is the result form Input.GetAxisRaw (axis). It lerps the movement to get smooth movement speed
@@ -136,4 +215,5 @@ public class Flame_FPSController : Flame_BaseController
 		// return the speed * the keystate so that if keyState = -1 we do not move forward, but in the opposite direction
 		return currentSpeed * keyState;	
 	}
+		
 }

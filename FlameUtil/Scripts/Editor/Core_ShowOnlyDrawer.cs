@@ -4,10 +4,15 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(ShowOnlyAttribute))]
 public class ShowOnlyDrawer : PropertyDrawer
 {
+    public override void OnGUI(Rect position, GameObject go, GUIContent label)
+    {
+
+    }
     public override void OnGUI(Rect position, SerializedProperty prop, GUIContent label)
     {
         string valueStr;
 
+        
         switch (prop.propertyType)
         {
             case SerializedPropertyType.Integer:
@@ -27,6 +32,10 @@ public class ShowOnlyDrawer : PropertyDrawer
                 break;
         }
 
+        if (prop is GameObject)
+        {
+
+        }
         EditorGUI.LabelField(position, label.text, valueStr);
     }
 }

@@ -68,7 +68,7 @@ public class Flame_VectorUtil {
 
     // Transform is the object to rotate. And target is the object to look at. 
     // Speed is the speed to rotate. And if 0 then no rotation and if under 0 then instant.
-    public static void LookAtWithSpeed(Transform transform, Vector3 target, float speed)
+	public static void LookAtWithSpeed(Transform transform, Vector3 target, float speed)
     {
 
         // No point in continuing!
@@ -91,4 +91,52 @@ public class Flame_VectorUtil {
 			transform.rotation = Quaternion.Slerp(transform.rotation, goalRotation, Time.deltaTime * speed);
         }
     }
+
+	public static Quaternion LockRotation (Quaternion rot, bool pitch, bool yaw, bool roll)
+	{
+		Vector3 euler = rot.eulerAngles;
+		euler.x = (pitch) ? 0 : euler.x;
+		euler.y = (yaw) ? 0 : euler.y;
+		euler.z = (roll) ? 0 : euler.z;
+		return Quaternion.Euler (euler);
+	}
+
+	// checks if a vector is close to another, in a certain range
+	public static bool CloseTo (Vector3 current, Vector3 goal, float range)
+	{
+		float dist = Vector3.Distance (current, goal);
+		return dist >= -range && dist <= range;
+	}
+
+	public static bool CloseTo (Quaternion current, Quaternion goal, float range)
+	{
+		Vector3 currentEuler = current.eulerAngles;
+		Vector3 goalEuler = current.eulerAngles;
+		return CloseTo (currentEuler, goalEuler, range);
+	}
+
+	public static Vector3 Normalized (Vector3 v)
+	{
+		float length = Length (v);
+		return new Vector3 (v.x / length, v.y / length, v.z / length);
+	}
+
+	public static float Length(Vector3 v)
+	{
+		return Mathf.Sqrt (v.x * v.x + v.y * v.y + v.z * v.z);
+	}
+
+	public static GameObject GetLookObject (float maxDist, Vector3 pos, Vector3 dir)
+	{
+		// the object that we look at's data
+		RaycastHit hit;
+
+		if (Physics.Raycast (pos, dir, out hit, maxDist))
+		{
+			return hit.transform.gameObject;
+		}
+		return null;
+	}
 }
+
+

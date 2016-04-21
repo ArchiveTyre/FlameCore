@@ -23,7 +23,7 @@ public class Flame_BaseController : MonoBehaviour {
 	[SerializeField] private GameObject startAvatar;
 
     // Never ever EVER directly modifie these variables directly. Use the Avatar instead.
-    [ShowOnly]
+    //[ShowOnly]
     public GameObject avatar;
 
     // Rigidbody for the avatar.
