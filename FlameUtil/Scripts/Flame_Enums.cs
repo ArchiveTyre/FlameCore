@@ -23,6 +23,31 @@ public class Flame_Enums {
         NO
     }
 
+    // Mono Means "one". So this enum can only go in 1D.
+    public enum MonoDirection
+    {
+        // Going forward
+        FORWARD,
+
+        // Has stopped. Probably has completed.
+        STOP,
+
+        // Going back
+        BACKWARD,
+    }
+
+    static public int EnumToInt(MonoDirection d)
+    {
+        switch (d)
+        {
+            case MonoDirection.FORWARD:
+                return 1;
+            case MonoDirection.BACKWARD:
+                return -1;
+            default:
+                return 0;
+        }
+    }
     static public bool EnumToBool(UndefinedPolar q)
     {
         switch (q)

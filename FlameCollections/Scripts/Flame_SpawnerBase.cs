@@ -52,6 +52,7 @@ public class Flame_SpawnerBase : MonoBehaviour {
     }
 
     [Tooltip("Advanced settings for spawner.")]
+
     // Name could be more like advancedSettingsAndData. But we can't change the name to only settings in the inspector.
     public AdvancedSettingsAndData advancedSettings = null;
 
