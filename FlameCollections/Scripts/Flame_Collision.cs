@@ -9,6 +9,7 @@ using System.Collections;
  * collisions neatly
 */
 
+// TODO: Why doesn't this extend Collision?
 public class Flame_Collision 
 {
 	// The game object we collide with
@@ -34,6 +35,7 @@ public class Flame_Collision
 
 	public Collider collider;
 
+    // TODO: All of these variables should be cloned me thinks.
 	public Flame_Collision (Collision coll)
 	{
 		// Get the properties of the collision
@@ -41,11 +43,13 @@ public class Flame_Collision
 		float magnitude = coll.impulse.magnitude;
 		Vector3 position = coll.transform.position;
 		Quaternion rotation = coll.transform.rotation;
-
+        
 		this.gameObject = gameObject;
 		this.magnitude = magnitude;
-		this.pointAtContact = pointAtContact;
-		this.rotationAtContact = rotationAtContact;
+        this.pointAtContact = coll.contacts[0].point;
+
+        // TODO: Is this correctly implemented?
+        this.rotationAtContact = gameObject.transform.rotation;
 		this.tag = gameObject.tag;
 		this.transform = coll.transform;
 		this.layer = gameObject.layer;

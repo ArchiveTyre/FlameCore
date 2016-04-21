@@ -95,7 +95,7 @@ public class Flame_FPSController : Flame_BaseController
 			moving = true;
 
 			// check if we are running
-			if (Input.GetAxisRaw (bindings.runAxis) == bindings.PRESSED && canRun)
+			if (Input.GetAxisRaw (bindings.runAxis) == Flame_KeyBindings.PRESSED && canRun)
 			{
 				running = true;
 			} else
@@ -159,7 +159,7 @@ public class Flame_FPSController : Flame_BaseController
 		print (registry.IsColliding (false));
 		if (!airborne)
 		{
-			if (Input.GetAxisRaw (bindings.jumpAxis) == bindings.PRESSED && canJump)
+			if (Input.GetAxisRaw (bindings.jumpAxis) == Flame_KeyBindings.PRESSED && canJump)
 			{
 				Jump ();
 			}

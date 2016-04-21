@@ -10,9 +10,6 @@ public class Flame_TPSController : Flame_BaseController
 	public bool canJump = true;
 	public bool canRun = true;
 
-	// the keybindings to use the correct keys
-	public Flame_KeyBindings bindings;
-
 	// speeds for running and accelerating
 	public float runSpeed = 20;
 	public float accelerationSpeed = 5;

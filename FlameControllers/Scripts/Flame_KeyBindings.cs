@@ -29,6 +29,6 @@ public class Flame_KeyBindings : MonoBehaviour
 	public const int PRESSED = 1;
 
 	// the raw state of an axis when it is released
-	public int RELEASED = 0;
+	public const int RELEASED = 0;
 
 }

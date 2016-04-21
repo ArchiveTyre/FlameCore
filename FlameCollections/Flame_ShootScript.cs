@@ -56,18 +56,18 @@ public class Flame_ShootScript : Flame_SpawnerBase
 	void Update () 
 	{
 		cooldownTime -= Time.deltaTime;
-		fire
+		//fire
 		if (mainProjectile != null && mainFire)
 		{
-			FireProjectile(mainProjectile, mainProjectileForce, mainAutomaticFire, mainFireTime)
+            //FireProjectile(mainProjectile, mainProjectileForce, mainAutomaticFire, mainFireTime);
 		}
 	}
 
 	public void FireProjectile (GameObject projectile, Vector3 ForceMode, bool autoFire, float fireTime, bool firing, string fireAxis)
 	{
-		if (Input.GetAxisRaw (fireAxis) == 1))
+		if (Input.GetAxisRaw (fireAxis) == 1)
 		{
-			if 
+			//if 
 		}
 	}
 
