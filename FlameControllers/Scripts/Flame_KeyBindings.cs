@@ -18,11 +18,17 @@ public class Flame_KeyBindings : MonoBehaviour
 	public string xLook = "Mouse X";
 	[Tooltip("What we use too look in the y axis with")]
 	public string yLook = "Mouse Y";
+	[Tooltip("Third Person rotate yaw")]
+	public string tpsYLook = "Horizontal";
+	[Tooltip("The button we use to shoot")]
+	public string fire = "Fire";
+	[Tooltip("Alternative fire button")]
+	public string altFire = "Fire2";
 
 	// the raw state of an axis when it is pressed
-	[HideInInspector] public int PRESSED = 1;
+	public const int PRESSED = 1;
 
 	// the raw state of an axis when it is released
-	[HideInInspector] public int RELEASED = 0;
+	public int RELEASED = 0;
 
 }
