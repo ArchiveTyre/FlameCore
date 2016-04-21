@@ -47,9 +47,7 @@ public class Flame_Collision
 		this.gameObject = gameObject;
 		this.magnitude = magnitude;
         this.pointAtContact = coll.contacts[0].point;
-
-        // TODO: Is this correctly implemented?
-        this.rotationAtContact = gameObject.transform.rotation;
+        this.rotationAtContact = rotation;
 		this.tag = gameObject.tag;
 		this.transform = coll.transform;
 		this.layer = gameObject.layer;
