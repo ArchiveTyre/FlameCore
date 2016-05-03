@@ -32,7 +32,7 @@ public class Flame_SpawnerBase : MonoBehaviour {
     [System.Serializable]
     public class AdvancedSettingsAndData
     {
-        [Tooltip("The max amount of alive objects this spawner can have at the time. If negativ then infinite.")]
+        [Tooltip("The max amount of alive objects this spawner can have at the time. If negative then infinite.")]
         public int maxSpawnsAliveAtTheTime = -1;
         public int maxTotalSpawns = -1;
         [Tooltip("If we should automaticly spawn objects as active on spawn.")]
