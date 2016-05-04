@@ -58,30 +58,24 @@ public class FlameInventory_Container : MonoBehaviour {
 public class Flame_Item
 {
 
+	public string slug;
+	public int id;
+	public string title = "Undefined";
+	public string description = "No information";
+	public int amount = 1;
+
 	// The folder inside a Resources folder that contains the sprites. Has to end with "/".
 	public string spriteFolderPath = "Sprites/Items/";
-
-	public int id;
-	public string title;
-	public int value;
-	public bool destroyOnNonPosetiv;
-	public string Description;
-	public bool stackable;
+	public bool destroyOnNonPosetiv = false;
+	public bool stackable = true;
+	
 	private Sprite sprite;
-	public string slug;
-	public int amount;
 
 	public IDictionary<string, object> Stats = new Dictionary<string, object>();
 
 	// The main item class.
-	public Flame_Item(int id, string slug, JsonData stats)
+	public Flame_Item(int id, string slug)
 	{
-
-		// List through all stats and add them. 
-		foreach (string s in stats.Keys)
-
-			// When we found something we add it.
-			Stats.Add(s, (int)stats[s]);
 
 		this.id = id;
 		this.slug = slug;
