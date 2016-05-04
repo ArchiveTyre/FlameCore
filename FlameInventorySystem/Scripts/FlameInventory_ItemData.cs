@@ -7,7 +7,7 @@ using System.Text;
 
 public class FlameInventory_ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
-	public ItemType item;
+	public OldItemType item;
 	
 	// For dubbel clicking
 

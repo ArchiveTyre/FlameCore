@@ -8,7 +8,7 @@ using System.IO;
 
 public class FlameInventory_ItemDatabase : MonoBehaviour {
 
-	private List<ItemType> database = new List<ItemType>();
+	private List<OldItemType> database = new List<OldItemType>();
 	private JsonData itemData;
 
 	// Inside of StreamingAssets. also has a default value for convinience.
@@ -43,7 +43,7 @@ public class FlameInventory_ItemDatabase : MonoBehaviour {
 	}
 	
 	// Get the item in database by ID, if item not found return null
-	public ItemType FetchItemByID(int id) {
+	public OldItemType FetchItemByID(int id) {
 		
 		// Make sure tha database has been inited.
 		if (itemData == null)
@@ -79,7 +79,7 @@ public class FlameInventory_ItemDatabase : MonoBehaviour {
 		{
 
 			// Add the item that is pointed.
-			database.Add (new ItemType (
+			database.Add (new OldItemType (
 				(int)itemData[i]["id"], 
 				itemData[i]["title"].ToString(), 
 				(int)itemData[i]["value"],
@@ -95,7 +95,7 @@ public class FlameInventory_ItemDatabase : MonoBehaviour {
 	}
 }
 	
-public class ItemType {
+public class OldItemType {
 	
 	// The folder inside a Resources folder that contains the sprites. Has to end with "/".
 	public string spriteFolderPath = "Sprites/Items/";
@@ -117,7 +117,7 @@ public class ItemType {
 	private IDictionary<string, object> Stats = new Dictionary<string, object>();
 	
 	// The main item class.
-	public ItemType(int id, string title, int value, string description, bool stackable, int rarity, string slug, bool destoryOnNonPosetiv, JsonData stats)
+	public OldItemType(int id, string title, int value, string description, bool stackable, int rarity, string slug, bool destoryOnNonPosetiv, JsonData stats)
 	{
 		
 		// ID
@@ -242,7 +242,7 @@ public class ItemType {
 		
 		
 	// For empty items
-	public ItemType() 
+	public OldItemType() 
 	{
 		
 		// ID -1 means an empty object.

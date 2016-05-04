@@ -60,11 +60,11 @@ public class FlameInventory_Inventory : MonoBehaviour {
 			ReCreateSlot (i);
 			
 			// Add an empty item.
-			inventoryData.items.Add(new ItemType());	
+			inventoryData.items.Add(new OldItemType());	
 		}
 	}
 	
-	public void RemoveItems (ItemType item, int quantity)
+	public void RemoveItems (OldItemType item, int quantity)
 	{
 		for (int i = 0; i < inventoryData.items.Count; i++)
 		{
@@ -82,7 +82,7 @@ public class FlameInventory_Inventory : MonoBehaviour {
 	}
 	
 	// Find and elimante. Returns the amount removed
-	public int DestroyItemAndSlot (ItemType item)
+	public int DestroyItemAndSlot (OldItemType item)
 	{
 		
 		print ("Destroy: " + item.Slug);
@@ -126,7 +126,7 @@ public class FlameInventory_Inventory : MonoBehaviour {
 			int quantityRemoved = inventoryData.items[index].Amount;
 		
 			// Overide with new Item.
-			inventoryData.items[index] = new ItemType();
+			inventoryData.items[index] = new OldItemType();
 			
 			ReCreateSlot (index);
 			
@@ -134,7 +134,7 @@ public class FlameInventory_Inventory : MonoBehaviour {
 	}
 	
 	// Returns the index where item was added. Returns -1 if no index was possible
-	public int AddItems(ItemType itemToAdd, int quantity) 
+	public int AddItems(OldItemType itemToAdd, int quantity) 
 	{
 		
 		// If it alrerady exists, then get its index. Will return -1 if does not exist.
@@ -201,7 +201,7 @@ public class FlameInventory_Inventory : MonoBehaviour {
 	
 	
 	//Returns the quantity of a certain item in the inventory.
-	public int GetTotalQuantity (ItemType item)
+	public int GetTotalQuantity (OldItemType item)
 	{
 		
 		// The main counter
@@ -225,7 +225,7 @@ public class FlameInventory_Inventory : MonoBehaviour {
 	}
 	
 	//Returns the inventory index of the co existor
-	int DoesItemExistInInventory (ItemType item)
+	int DoesItemExistInInventory (OldItemType item)
 	{
 		
 		// Loop through inventory
@@ -262,7 +262,7 @@ public class FlameInventory_Inventory : MonoBehaviour {
 
 public class Inventory_InventoryData
 {
-	public List<ItemType>items = new List<ItemType>();
+	public List<OldItemType>items = new List<OldItemType>();
 	
 	// Save to file
 	public void InventorySaveToFile (string filePath)

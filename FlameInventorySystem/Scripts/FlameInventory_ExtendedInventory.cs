@@ -45,7 +45,7 @@ public class FlameInventory_ExtendedInventory : FlameInventory_Inventory {
 	public int AddItems(int id, int quantity)
 	{
 		// Get an Item Database referance.
-		ItemType itemToAdd = itemDatabase.FetchItemByID(id);
+		OldItemType itemToAdd = itemDatabase.FetchItemByID(id);
 		
 		// Then do the operation.
 		return base.AddItems(itemToAdd, quantity);
@@ -56,7 +56,7 @@ public class FlameInventory_ExtendedInventory : FlameInventory_Inventory {
 	{
 		
 		// Get an Item Database referance.
-		ItemType itemToRemove = itemDatabase.FetchItemByID(id);
+		OldItemType itemToRemove = itemDatabase.FetchItemByID(id);
 		
 		// Then do the operation.
 		base.RemoveItems(itemToRemove, quantity);
@@ -66,7 +66,7 @@ public class FlameInventory_ExtendedInventory : FlameInventory_Inventory {
 	public bool RemoveItemsIfExists (int id, int quantity)
 	{
 		// Get an Item Database referance.
-		ItemType itemToRemove = itemDatabase.FetchItemByID(id);
+		OldItemType itemToRemove = itemDatabase.FetchItemByID(id);
 		
 		// Then do the operation.
 		return RemoveItemsIfExists (itemToRemove, quantity);
@@ -76,7 +76,7 @@ public class FlameInventory_ExtendedInventory : FlameInventory_Inventory {
 	public int GetTotalQuantity (int id)
 	{
 		// Get an Item Database referance.
-		ItemType itemToAdd = itemDatabase.FetchItemByID(id);
+		OldItemType itemToAdd = itemDatabase.FetchItemByID(id);
 		
 		// Do the counting with the refernace.
 		return base.GetTotalQuantity(itemToAdd);
@@ -84,7 +84,7 @@ public class FlameInventory_ExtendedInventory : FlameInventory_Inventory {
 	}
 	
 	// Return true if remove was possible and succeded.
-	public bool RemoveItemsIfExists (ItemType item, int quantity)
+	public bool RemoveItemsIfExists (OldItemType item, int quantity)
 	{
 		
 		// If we have enough items

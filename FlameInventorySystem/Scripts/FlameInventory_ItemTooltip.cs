@@ -9,7 +9,7 @@ public class FlameInventory_ItemTooltip : MonoBehaviour {
 	[SerializeField] private float catchTime = 0.25f;
 
 	// Item referance, used for constructing the data.
-	private ItemType item;
+	private OldItemType item;
 	
 	// The text object. We have it here for extra performance. TODO: Should we be re-checking this one?
 	private Text dataTextObject;
@@ -57,7 +57,7 @@ public class FlameInventory_ItemTooltip : MonoBehaviour {
 	}
 	
 	// Show the tooltip as well as store important data.
-	public void Activate(ItemType item)
+	public void Activate(OldItemType item)
 	{
 		
 		// Reset the item.
