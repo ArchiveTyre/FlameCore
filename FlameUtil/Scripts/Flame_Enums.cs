@@ -144,6 +144,8 @@ public class Flame_Enums {
 				return Vector3.back;
 
 			default:
+				Debug.LogError("Error enum is undefined!");
+				Debug.LogError(System.Environment.StackTrace);
 				return Vector3.zero;
 
 		}
