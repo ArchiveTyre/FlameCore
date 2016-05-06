@@ -36,6 +36,42 @@ public class Flame_Enums {
         BACKWARD,
     }
 
+	public enum Direction3D
+	{
+		// Forward
+		FORWARD,
+
+		// Back
+		BACK,
+
+		// Left 
+		LEFT,
+
+		// Right
+		RIGHT,
+
+		// Up
+		UP,
+
+		// Down
+		DOWN
+	}
+
+	public enum Direction2D
+	{
+		// Up
+		UP,
+
+		// Down
+		DOWN,
+
+		// Left
+		LEFT,
+
+		// Right
+		RIGHT
+	}
+
     static public int EnumToInt(MonoDirection d)
     {
         switch (d)
@@ -48,6 +84,7 @@ public class Flame_Enums {
                 return 0;
         }
     }
+
     static public bool EnumToBool(UndefinedPolar q)
     {
         switch (q)
@@ -83,4 +120,34 @@ public class Flame_Enums {
 
         }
     }
+
+	static public Vector3 EnumToVector (Direction3D d)
+	{
+		switch (d)
+		{
+			case Direction3D.UP:
+				return Vector3.up;
+				break;
+
+			case Direction3D.DOWN:
+				return Vector3.down;
+				break;
+
+			case Direction3D.LEFT:
+				return Vector3.left;
+				break;
+
+			case Direction3D.RIGHT:
+				return Vector3.right;
+				break;
+
+			case Direction3D.FORWARD:
+				return Vector3.forward;
+				break;
+
+			case Direction3D.BACK:
+				return Vector3.back;
+				break;
+		}
+	}
 }
