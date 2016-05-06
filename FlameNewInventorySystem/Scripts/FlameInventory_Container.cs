@@ -8,6 +8,10 @@ public class FlameInventory_Container : MonoBehaviour {
 
 	public List<Flame_Item> items = new List<Flame_Item>();
 
+	public delegate void ItemSwapAction(int index);
+	//[SyncEvent]
+	public event ItemSwapAction OnSwap;
+
 	public bool AddItem (Flame_Item o)
 	{
 		items.Insert(items.Count, o);
@@ -46,11 +50,21 @@ public class FlameInventory_Container : MonoBehaviour {
 		}
 	}
 
-	public static void SwapItem(ref Flame_Item a, ref Flame_Item b)
+	// Swaps two items.
+	public static void SwapItem(FlameInventory_ItemDrawerBase a, FlameInventory_ItemDrawerBase b)
 	{
-		Flame_Item c = a;
-		a = b;
-		b = c; // C is old a.
+		FlameInventory_Container aContainer = a.itemContainer;
+		FlameInventory_Container bContainer = b.itemContainer;
+
+		int aIndex = a.transform.GetSelfIndex();
+		int bIndex = b.transform.GetSelfIndex();
+		
+		Flame_Item tempItem = aContainer.items[aIndex];
+		aContainer.items[aIndex] = bContainer.items[bIndex];
+		bContainer.items[bIndex] = tempItem;
+
+		aContainer.OnSwap(aIndex);
+		bContainer.OnSwap(bIndex);
 	}
 
 	public Flame_Item GetBySlug(String slug)

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using LitJson;
 using System;
 
-public class FlameInventory_Drawer : MonoBehaviour {
+public class FlameInventory_InventoryDrawer : MonoBehaviour {
 
 	// The container to draw.
 	public FlameInventory_Container container = null;
@@ -14,20 +14,29 @@ public class FlameInventory_Drawer : MonoBehaviour {
 
 	public GameObject itemRep = null;
 
-	void OnContainerUpdate()
+	void OnItemSwap(int index)
 	{
+		GameObject slot = itemContainerObject.transform.GetChild(index).gameObject;
+		FlameInventory_ItemDrawerBase itr = slot.GetComponentInChildren<FlameInventory_ItemDrawerBase>();
+		itr.UpdateContainer(container);
+		Flame_Item item = container.items[index];
+		itr.UpdateItemRef(item);
 
 	}
 
 	public void ChangeContainer(FlameInventory_Container container)
 	{
+		
 		if (itemContainerObject == null)
 		{
 			Debug.LogError("Trying to ChangeContainer before init!");
 			return;
 		}
 
+		this.container.OnSwap -= OnItemSwap;
 		this.container = container;
+		this.container.OnSwap += OnItemSwap;
+
 		int children = itemContainerObject.transform.childCount;
 
 		for (int i = 0; i < children; ++i)
@@ -62,9 +71,8 @@ public class FlameInventory_Drawer : MonoBehaviour {
 	private Flame_Item CreateEmptyItem(int index)
 	{
 		Flame_Item item = new Flame_Item();
-		//container.items[index] = item;
 		container.items.Insert(index, item);
-		Debug.Log("Inserting at: " + index);
+
 		return item;
 	}
 
@@ -100,10 +108,5 @@ public class FlameInventory_Drawer : MonoBehaviour {
 		container.SaveContainer();
 
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 }
