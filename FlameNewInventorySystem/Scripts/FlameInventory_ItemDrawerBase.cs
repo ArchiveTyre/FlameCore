@@ -4,9 +4,17 @@ using UnityEngine.UI;
 
 public class FlameInventory_ItemDrawerBase : MonoBehaviour {
 
-	private FlameInventory_Container itemContainer = null;
+	[HideInInspector]
+	public FlameInventory_Container itemContainer = null;
 
 	public Flame_Item item = null;
+
+	Transform image = null;
+
+	void Start()
+	{
+		image = transform.Find("Item").Find("Image");
+	}
 
 	public void UpdateContainer(FlameInventory_Container container)
 	{
@@ -24,15 +32,18 @@ public class FlameInventory_ItemDrawerBase : MonoBehaviour {
 	public virtual void UpdateItemRef(Flame_Item item)
 	{
 		
-		Image image = transform.Find("Item Rep").GetComponent<Image>() ?? GetComponent<Image>();
-		Text text = transform.Find("Quantity").GetComponent<Text>();
+		Image image = transform.Find("Item").Find("Image").GetComponent<Image>() ?? GetComponent<Image>();
+		Text text = image.transform.Find("Quantity").GetComponent<Text>();
+
+		transform.Find("Item").GetComponent<FlameInventory_Dragable>().origin = this;
+		this.item = item;
 
 		if (item != null)
 
 		// Populated slot
 		{
 
-			transform.Find("Item Rep").gameObject.SetActive(true);
+			//image.gameObject.SetActive(true);
 
 			image.sprite = item.GetSprite();
 			
@@ -43,7 +54,7 @@ public class FlameInventory_ItemDrawerBase : MonoBehaviour {
 		// Blank slot
 		{
 			image.sprite = null;
-			transform.Find("Item Rep").gameObject.SetActive(false);
+			//image.gameObject.SetActive(false);
 			text.text = "";
 		}
 	}

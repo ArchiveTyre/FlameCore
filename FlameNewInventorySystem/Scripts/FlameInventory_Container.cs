@@ -30,7 +30,20 @@ public class FlameInventory_Container : MonoBehaviour {
 	public void LoadContainer()
 	{
 		string json = "";
+		LoadContainer(json);
+	}
+
+	public void LoadContainer(string json)
+	{
+
+		// Load the items
 		items = JsonMapper.ToObject<List<Flame_Item>>(json);
+
+		// Reload their sprites...
+		foreach (Flame_Item item in items)
+		{
+			item.ReloadItemSprite();
+		}
 	}
 
 	public static void SwapItem(ref Flame_Item a, ref Flame_Item b)
@@ -55,7 +68,7 @@ public class FlameInventory_Container : MonoBehaviour {
 }
 
 [Serializable]
-public class Flame_Item
+public class Flame_Item : IComparable
 {
 
 	public string slug;
@@ -66,12 +79,13 @@ public class Flame_Item
 
 	// The folder inside a Resources folder that contains the sprites. Has to end with "/".
 	public string spriteFolderPath = "Sprites/Items/";
-	public bool destroyOnNonPosetiv = false;
+	public bool removeIfNan = false;
 	public bool stackable = true;
 	
 	private Sprite sprite;
 
-	public IDictionary<string, object> Stats = new Dictionary<string, object>();
+	//public IDictionary<string, object> Stats = new Dictionary<string, object>();
+	public Dictionary<string, object> Stats = new Dictionary<string, object>();
 
 	// The main item class.
 	public Flame_Item(int id, string slug)
@@ -83,31 +97,6 @@ public class Flame_Item
 		// Load the sprite based on the slug!
 		ReloadItemSprite();
 
-		
-
-		/*// ID
-		this.ID = id;
-
-		// Title
-		this.Title = title;
-
-		// Value of the items, in shops for example.
-		this.Value = value;
-
-		// Description
-		this.Description = description;
-
-		// If the item is Stackable or not.
-		this.Stackable = stackable;
-
-		// The rarity of the item.
-		this.Rarity = rarity;
-
-		// The slug.
-		this.Slug = slug;
-
-		// If we are going to destroy the object if it's Amount is not posetiv.
-		this.DestoryOnNonPosetiv = destoryOnNonPosetiv;*/
 	}
 
 	// Get the sprite	
@@ -130,7 +119,7 @@ public class Flame_Item
 		{
 
 			// Error, we failed!
-			Debug.LogError("Could not find sprite for: " + slug);
+			Debug.LogError("Could not find sprite: " + spriteFolderPath + slug);
 
 			// Set the referance to a garantued existing sprite. "missing_sprite".
 			this.sprite = Resources.Load<Sprite>(spriteFolderPath + "missing_sprite");
@@ -158,6 +147,11 @@ public class Flame_Item
 		}
 		return stats;
 
+	}
+
+	public void SetStat(string statName, int value)
+	{
+		Stats[statName] = value;
 	}
 
 	// Returns an T.
@@ -192,7 +186,12 @@ public class Flame_Item
 		}
 	}
 
-
+	public int CompareTo(object obj)
+	{
+		if (obj == this)
+			return 0;
+		return 1;
+	}
 
 	// For empty items
 	public Flame_Item()
@@ -201,4 +200,5 @@ public class Flame_Item
 		// ID -1 means an empty object.
 		this.id = -1;
 	}
+
 }

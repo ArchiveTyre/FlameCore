@@ -19,7 +19,7 @@ public class FlameInventory_Drawer : MonoBehaviour {
 
 	}
 
-	void ChangeContainer(FlameInventory_Container container)
+	public void ChangeContainer(FlameInventory_Container container)
 	{
 		if (itemContainerObject == null)
 		{
@@ -38,8 +38,11 @@ public class FlameInventory_Drawer : MonoBehaviour {
 			// TODO: Better solution....
 			try
 			{
-				item = container.items[i] ?? null;
-			} catch (ArgumentOutOfRangeException) {}
+				item = container.items[i];
+			} catch (ArgumentOutOfRangeException)
+			{
+				item = CreateEmptyItem(i);
+			}
 
 			FlameInventory_ItemDrawerBase itr = slot.GetComponentInChildren<FlameInventory_ItemDrawerBase>();
 			if (itr == null)
@@ -55,6 +58,16 @@ public class FlameInventory_Drawer : MonoBehaviour {
 
 		}
 	}
+
+	private Flame_Item CreateEmptyItem(int index)
+	{
+		Flame_Item item = new Flame_Item();
+		//container.items[index] = item;
+		container.items.Insert(index, item);
+		Debug.Log("Inserting at: " + index);
+		return item;
+	}
+
 	private GameObject CreateRep()
 	{
 		GameObject itr = GameObject.Instantiate(itemRep);
@@ -74,15 +87,19 @@ public class FlameInventory_Drawer : MonoBehaviour {
 
 
 		// For tests...
-		Flame_Item item = new Flame_Item(0, "old_rusty_sword", new JsonData());
-
+		/*Flame_Item item = new Flame_Item(0, "old_rusty_sword");
+		item.SetStat("Strength", 16);
 		container.AddItem(item, 32);
 		container.SaveContainer();
-		ChangeContainer(container);
-		
-		
-		
-		
+		ChangeContainer(container);*/
+		FlameInventory_Container cont = gameObject.AddComponent<FlameInventory_Container>();
+		cont.LoadContainer(@"[{""slug"":""old_rusty_sword"",""id"":0,""title"":""An old rusty sword"",""Stats"":{""Strength"":16}}]");
+		Flame_Item item = new Flame_Item(0, "old_rusty_sword");
+		cont.AddItem(item);
+		ChangeContainer(cont);
+		container.SaveContainer();
+
+
 	}
 	
 	// Update is called once per frame
