@@ -7,21 +7,19 @@ using System;
 public class FlameInventory_Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler
 {
 
+	// For dubbel clicking
+	private float lastClickTime;
+	public float doubleClickCatchTime = 0.25f;
+
 	// What slot is ours.
 	public FlameInventory_ItemDrawerBase origin = null;
 
 	// Wheter a use event was handeled.
-	private bool pointHandeled;
-
-	// You can overidde this if you want a custom handler. return true if handled. TODO: Use events instead...
-	public virtual bool OnUse()
-	{
-		return false;
-	}
+	public bool PointHandeled { private set; get; }
 
 	public void OnBeginDrag(PointerEventData eventData)
 	{
-		if (pointHandeled)
+		if (PointHandeled)
 			return;
 
 		if (origin.item != null /*&& inv.isInventoryEditable*/)
@@ -34,7 +32,8 @@ public class FlameInventory_Dragable : MonoBehaviour, IBeginDragHandler, IDragHa
 
 	public void OnDrag(PointerEventData eventData)
 	{
-		if (pointHandeled)
+
+		if (PointHandeled)
 			return;
 
 		// Check if there is an item to drag.
@@ -46,13 +45,13 @@ public class FlameInventory_Dragable : MonoBehaviour, IBeginDragHandler, IDragHa
 		}
 	}
 
+	public void StopDrag()
+	{
+		PointHandeled = true;
+	}
+
 	public void OnEndDrag(PointerEventData eventData)
 	{
-		// Check if edits are allowed.
-		//if (!inv.isInventoryEditable)
-
-			// If not, then quickly return;
-			//return;
 
 		// Set the parent to the new / old parent depending on wheter item was moved.
 		this.transform.SetParent(origin.transform);
@@ -64,44 +63,54 @@ public class FlameInventory_Dragable : MonoBehaviour, IBeginDragHandler, IDragHa
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}
 
-	// TODO: Is this neccesary? If so we need better handeling.
+	// For item use.
 	public void OnPointerDown(PointerEventData eventData)
 	{
 
-		pointHandeled = this.OnUse();
+		// Reset
+		PointHandeled = false;
 
-		if (pointHandeled)
-			return;
+		// Check double click.
+		if (Time.time - lastClickTime < doubleClickCatchTime)
+		{
 
-		// Check if edits are allowed.
-		//if (!inv.isInventoryEditable)
-
-			// If not, then quickly return;
-			//return;
+			// Double click
+			origin.inventoryDrawer.CallItemClick(this, true);
+		}
+		else
+		{
+			//normal click
+			origin.inventoryDrawer.CallItemClick(this, false);
+		}
+		lastClickTime = Time.time;
+		
 	}
 
 	// Activate the tooltip so it renders.
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		//tooltip.Activate(item);
+		if (origin.inventoryDrawer.tooltip != null)
+			origin.inventoryDrawer.tooltip.Activate(origin.item);
 
 	}
 
 	// Deactivate the tooltip.
 	public void OnPointerExit(PointerEventData eventData)
 	{
-		//tooltip.Deactive();
+		if (origin.inventoryDrawer.tooltip != null)
+			origin.inventoryDrawer.tooltip.Deactivate();
 	}
 
 	// Swap two items.
 	public void OnDrop(PointerEventData eventData)
 	{
-
-		//if (!inventory.isInventoryEditable)
-		//	return;
 		
 		// For easier access.
 		FlameInventory_Dragable other = eventData.pointerDrag.GetComponent<FlameInventory_Dragable>();
+
+		// Check if we are allowed.
+		if (other.PointHandeled)
+			return;
 
 		FlameInventory_Container.SwapItem(this.origin, other.origin);
 		

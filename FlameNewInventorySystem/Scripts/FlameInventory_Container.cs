@@ -12,11 +12,6 @@ public class FlameInventory_Container : MonoBehaviour {
 	//[SyncEvent]
 	public event ItemSwapAction OnSwap;
 
-	public bool AddItem (Flame_Item o)
-	{
-		items.Insert(items.Count, o);
-		return false;
-	}
 
 	public bool AddItem(Flame_Item item, int quantity)
 	{
@@ -53,20 +48,61 @@ public class FlameInventory_Container : MonoBehaviour {
 	// Swaps two items.
 	public static void SwapItem(FlameInventory_ItemDrawerBase a, FlameInventory_ItemDrawerBase b)
 	{
+
+		// For convinence.
 		FlameInventory_Container aContainer = a.itemContainer;
 		FlameInventory_Container bContainer = b.itemContainer;
 
+		// Get the drawers.
+		FlameInventory_InventoryDrawer aDraw = a.GetComponentInParent<FlameInventory_InventoryDrawer>();
+		FlameInventory_InventoryDrawer bDraw = b.GetComponentInParent<FlameInventory_InventoryDrawer>();
+
+		// TODO: A and B should be sepparated.
+		if (aContainer != aDraw.container
+			|| bContainer != bDraw.container)
+		{
+
+			a.itemContainer = a.GetComponentInParent<FlameInventory_Container>();
+			b.itemContainer = b.GetComponentInParent<FlameInventory_Container>();
+			Debug.Log("Refresh a and b");
+			// Refresh
+			aDraw.RefreshContainer();
+			bDraw.RefreshContainer();
+
+			return;
+		}
+		
+		// Get the positions.
 		int aIndex = a.transform.GetSelfIndex();
 		int bIndex = b.transform.GetSelfIndex();
-		
+
+		// Check if we should block
+		{
+			bool aA = !aDraw.CallMoveAction(bDraw, a.item, b.item);
+			bool bA = !bDraw.CallMoveAction(aDraw, b.item, a.item);
+			bool shouldBlock = aA || bA;
+			if (shouldBlock)
+				return;
+		}
+
+		// Perform swap
 		Flame_Item tempItem = aContainer.items[aIndex];
 		aContainer.items[aIndex] = bContainer.items[bIndex];
 		bContainer.items[bIndex] = tempItem;
 
-		aContainer.OnSwap(aIndex);
-		bContainer.OnSwap(bIndex);
+		// Activate event.
+		if (aContainer.OnSwap != null)
+			aContainer.OnSwap(aIndex);
+		if (bContainer.OnSwap != null)
+			bContainer.OnSwap(bIndex);
+
+		// Update refs. (In case there was a -1 to a posetiv swap.
+		a.UpdateItemRef(aContainer.items[aIndex]);
+		b.UpdateItemRef(bContainer.items[bIndex]);
+
 	}
 
+	// To get an item ref by slug.
 	public Flame_Item GetBySlug(String slug)
 	{
 		foreach (Flame_Item f in items)
@@ -85,7 +121,7 @@ public class FlameInventory_Container : MonoBehaviour {
 public class Flame_Item : IComparable
 {
 
-	public string slug;
+	public string slug = "";
 	public int id;
 	public string title = "Undefined";
 	public string description = "No information";
@@ -125,15 +161,23 @@ public class Flame_Item : IComparable
 	public void ReloadItemSprite()
 	{
 
+		
 		// Load.
 		this.sprite = Resources.Load<Sprite>(spriteFolderPath + slug);
 
 		// Check for failures.
 		if (this.sprite == null)
 		{
+			if (this.slug == "")
+			{
+				Debug.LogError("Slug not set.");
+			}
 
-			// Error, we failed!
-			Debug.LogError("Could not find sprite: " + spriteFolderPath + slug);
+			else
+			{
+				// Error, we failed!
+				Debug.LogError("Could not find sprite: " + spriteFolderPath + slug);
+			}
 
 			// Set the referance to a garantued existing sprite. "missing_sprite".
 			this.sprite = Resources.Load<Sprite>(spriteFolderPath + "missing_sprite");

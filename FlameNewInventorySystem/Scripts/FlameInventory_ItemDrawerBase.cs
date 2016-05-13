@@ -21,7 +21,6 @@ public class FlameInventory_ItemDrawerBase : MonoBehaviour {
 	// Whether we have initialised.
 	private bool hasInitialised = false;
 
-	private Color oldColor;
 	void Start()
 	{
 	
@@ -56,6 +55,8 @@ public class FlameInventory_ItemDrawerBase : MonoBehaviour {
 	// This is supposed to be overwritten
 	public virtual void UpdateItemRef(Flame_Item item)
 	{
+
+		if (item == null) item = new Flame_Item();
 
 		// Update the new item.
 		this.item = item;
