@@ -9,16 +9,24 @@ public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
 {
 
 	[SerializeField]
-	private List<string> _keys;
+	private List<string> _keys = new List<string>();
 
 	[SerializeField]
-	private List<string> _values;
+	private List<string> _values = new List<string>();
 
-	public Dictionary<string, string> content = new Dictionary<string, string>();
+	[SerializeField, HideInInspector]
+	private string _current_key = "Foo";
+
+	[SerializeField, HideInInspector]
+	private string _current_value = "Bar";
+
+
+	[SerializeField]
+	public Dictionary<string, string> content;
 
 	public Flame_Attr()
 	{
-
+		content = new Dictionary<string, string>();
 	}
 
 	public void OnBeforeSerialize()
@@ -36,7 +44,8 @@ public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
 	{
 		content.Clear();
 		for (int i = 0; i != Math.Min(_keys.Count, _values.Count); i++)
-			content.Add(_keys[i], _values[i]);
+			//content.Add(_keys[i], _values[i]);
+			content[_keys[i]] = _values[i];
 	}
 
 	void OnGUI()

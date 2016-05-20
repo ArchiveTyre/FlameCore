@@ -135,7 +135,7 @@ public class Flame_Item : IComparable
 	private Sprite sprite;
 
 	//public IDictionary<string, object> Stats = new Dictionary<string, object>();
-	public Dictionary<string, object> Stats = new Dictionary<string, object>();
+	public Flame_Attr stats = new Flame_Attr();
 
 	// The main item class.
 	public Flame_Item(int id, string slug)
@@ -188,60 +188,34 @@ public class Flame_Item : IComparable
 	public string[] GetStatNames()
 	{
 		// Create a array.
-		string[] stats = new string[Stats.Count];
+		string[] lstats = new string[stats.content.Count];
 
 		// Create a counter.
 		int i = 0;
 
 		// Then cycle through all vars.
-		foreach (string s in Stats.Keys)
+		foreach (string s in stats.content.Keys)
 		{
 
 			// Set the vars.
-			stats[i] = s;
+			lstats[i] = s;
 
 			// Increment the counter.
 			i++;
 		}
-		return stats;
+		return lstats;
 
 	}
 
 	public void SetStat(string statName, int value)
 	{
-		Stats[statName] = value;
+		stats.content[statName] = ""+value;
 	}
 
 	// Returns an T.
-	public T GetStat<T>(string statName)
+	public string GetStat (string statName)
 	{
-
-		// Check if the request is the type of "object".
-		if (Stats[statName] is T)
-		{
-			return (T)Stats[statName];
-		}
-
-		// If not we need to convert it to T.
-		else
-		{
-
-			// This may fail so we try.
-			try
-			{
-
-				// Return the converted type.
-				return (T)Convert.ChangeType(Stats[statName], typeof(T));
-			}
-
-			// We failed
-			catch (InvalidCastException)
-			{
-
-				// Return default type.
-				return default(T);
-			}
-		}
+		return stats.content[statName];
 	}
 
 	public int CompareTo(object obj)

@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 
 [CustomPropertyDrawer(typeof(Flame_Attr))]
+//[CustomEditor(typeof(Flame_Attr))]
 public class Flame_AttrEditor : PropertyDrawer
 {
 
-	string valText = "Value";
-	string keyText = "Key";
+	//string valText = "Foo";
+	//string keyText = "Bar";
 
 	public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
 	{
@@ -32,14 +35,21 @@ public class Flame_AttrEditor : PropertyDrawer
 			EditorGUI.LabelField(a1, "Key");
 			EditorGUI.LabelField(a2, "Value");
 
-			valText = EditorGUI.TextField(r2, valText);
-			keyText = EditorGUI.TextField(r1, keyText);
+			property.FindPropertyRelative("_current_key").stringValue = EditorGUI.TextField(r1, property.FindPropertyRelative("_current_key").stringValue);
+			property.FindPropertyRelative("_current_value").stringValue = EditorGUI.TextField(r2, property.FindPropertyRelative("_current_value").stringValue);
 
-			if (GUI.Button(r3,"Add Entry"))
+			if (GUI.Button(r3, "Add Entry"))
 			{
-				Flame_Attr attr = fieldInfo.GetValue(property.serializedObject.targetObject) as Flame_Attr;
-				attr.content[keyText] = valText;
+				var keyValue = property.FindPropertyRelative("_keys");
+				keyValue.arraySize++;
+				var stp = keyValue.GetArrayElementAtIndex(keyValue.arraySize - 1);
+				stp.stringValue = property.FindPropertyRelative("_current_key").stringValue;
 
+				var valValue = property.FindPropertyRelative("_values");
+				valValue.arraySize++;
+				var stv = valValue.GetArrayElementAtIndex(valValue.arraySize - 1);
+				stv.stringValue = property.FindPropertyRelative("_current_value").stringValue;
+				GUI.FocusControl("");
 
 			}
 		}
