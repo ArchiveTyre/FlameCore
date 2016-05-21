@@ -14,6 +14,7 @@ public class FlameInventory_Tooltip : MonoBehaviour
 {
 	public virtual void Activate(Flame_Item item)
 	{
+		transform.position = Input.mousePosition;
 		if (item.id != -1)
 			gameObject.SetActive(true);
 		Text text = GetComponentInChildren<Text>();
