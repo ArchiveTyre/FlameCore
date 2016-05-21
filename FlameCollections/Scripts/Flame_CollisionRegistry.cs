@@ -28,7 +28,7 @@ public class Flame_CollisionRegistry : MonoBehaviour
 	void OnCollisionEnter (Collision coll)
 	{
 		// The transform of the collision
-		Transform transf = coll.transform;
+		//Transform transf = coll.transform;
 
 		// Store collision data in container
 		Flame_Collision collision = new Flame_Collision(coll);
@@ -42,8 +42,6 @@ public class Flame_CollisionRegistry : MonoBehaviour
 
 	void OnCollisionExit (Collision coll)
 	{
-		// The transform of the collision
-		Transform transf = coll.transform;
 
 		// Store collision data in container
 		Flame_Collision collision = new Flame_Collision(coll);

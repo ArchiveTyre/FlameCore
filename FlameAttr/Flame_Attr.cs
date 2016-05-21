@@ -20,7 +20,6 @@ public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
 
 	[SerializeField, HideInInspector]
 	private string _current_value = "Bar";
-	#pragma warning restore 169, 414
 
 	[SerializeField]
 	public Dictionary<string, string> content;

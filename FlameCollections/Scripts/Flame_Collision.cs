@@ -12,6 +12,9 @@ using System.Collections;
 // TODO: Why doesn't this extend Collision?
 public class Flame_Collision 
 {
+
+	#pragma warning disable 169, 414
+
 	// The game object we collide with
 	public GameObject gameObject;
 
@@ -30,6 +33,9 @@ public class Flame_Collision
 	// What the layer of teh gameObjet is
 	public int layer;
 
+	// Where we contacted
+	public Vector3 wasAtContact;
+
 	// What the transform of the gameObject is
 	public Transform transform;
 
@@ -41,7 +47,7 @@ public class Flame_Collision
 		// Get the properties of the collision
 		GameObject gameObject = coll.gameObject;
 		float magnitude = coll.impulse.magnitude;
-		Vector3 position = coll.transform.position;
+		wasAtContact = coll.transform.position;
 		Quaternion rotation = coll.transform.rotation;
         
 		this.gameObject = gameObject;

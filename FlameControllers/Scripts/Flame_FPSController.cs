@@ -119,11 +119,11 @@ public class Flame_FPSController : Flame_BaseController
 
 		// get input
 		float hor = Input.GetAxisRaw (bindings.horizontalAxis);
-		float ver = Input.GetAxisRaw (bindings.verticalAxis);
+		//float ver = Input.GetAxisRaw (bindings.verticalAxis);
 
 		// get the speeds of the different axises and also make sure we can move in that direction
 		float horMove = GetSpeed (hor) * Time.deltaTime * (walkXAxis ? 1 : 0);
-		float verMove = GetSpeed (ver) * Time.deltaTime * (walkZAxis ? 1 : 0);
+		//float verMove = GetSpeed (ver) * Time.deltaTime * (walkZAxis ? 1 : 0);
 
 		/////////////////// This variable needs to be converted to local space, somet1hing seems wrong
 		// the vector which we will be moving by 
@@ -142,7 +142,7 @@ public class Flame_FPSController : Flame_BaseController
 		float hor = Input.GetAxis (bindings.xLook) * lookSpeed * Flame_Math.Raw (lookXAxis);
 		float ver = Input.GetAxis (bindings.yLook) * lookSpeed * Flame_Math.Raw (lookYAxis);
 
-		Vector3 camRot = avatarCamera.transform.rotation.eulerAngles;
+		//Vector3 camRot = avatarCamera.transform.rotation.eulerAngles;
 		Vector3 avatarRot = avatar.transform.eulerAngles;
 
 		rotationX += -ver;

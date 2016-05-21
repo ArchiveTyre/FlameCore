@@ -95,8 +95,8 @@ public class Flame_ShootScript : Flame_SpawnerBase
 	/// <summary> Fires the set projectile </summary>
 	private void FireProjectile ()
 	{
-		GameObject instProj = (GameObject) Instantiate (projectile, transform.position, transform.rotation);
-		Rigidbody rb = instProj.GetComponent <Rigidbody> ();
+		//GameObject instProj = (GameObject) Instantiate (projectile, transform.position, transform.rotation);
+		//Rigidbody rb = instProj.GetComponent <Rigidbody> ();
 	}  
 
 

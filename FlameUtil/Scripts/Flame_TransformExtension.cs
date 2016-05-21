@@ -7,11 +7,11 @@ public static class Flame_TransformExtension{
 	{
 		Transform parent = self.parent;
 		int childCount = parent.childCount;
-		for (int i = 0; i < childCount; i++)
+		for (int index = 0; index < childCount; index++)
 		{
-			if (parent.GetChild(i) == self)
+			if (parent.GetChild(index) == self)
 			{
-				return i;
+				return index;
 			}
 		}
 		return -1;
