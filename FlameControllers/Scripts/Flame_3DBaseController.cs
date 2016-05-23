@@ -9,6 +9,11 @@ namespace FlameCore.Controllers
 
 		private Rigidbody cachedRigidbody;
 
+		protected override void SetupBase()
+		{
+			base.SetupBase();
+			cachedRigidbody = GetComponent<Rigidbody>();
+		}
 		// Rigidbody for the avatar.
 		protected Rigidbody avatar_rigidbody
 		{

@@ -50,7 +50,7 @@ namespace FlameCore.Controllers
 		// The speed of rotation
 		public float rotationSpeed = 1f;
 
-		void SetupBase()
+		virtual protected void SetupBase()
 		{
 			if (Avatar == null)
 			{
