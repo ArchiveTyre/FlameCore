@@ -11,6 +11,8 @@ public class Flame_Entity : MonoBehaviour {//NetworkBehaviour {
 
 	public FlameEntity_Health health = new FlameEntity_Health();
 
+	public FlameInventory_Container container = null;
+
 	public float FallDamageReduce(float damage)
 	{
 		if (damage < 5)
@@ -22,8 +24,8 @@ public class Flame_Entity : MonoBehaviour {//NetworkBehaviour {
 
 		//if (isServer)
 		{
+			container = GetComponent<FlameInventory_Container>() ?? gameObject.AddComponent<FlameInventory_Container>();
 			health.RegisterType(new FallDamage(FallDamageReduce));
-			stats.content.Add("Health", "10");
 		}
 	}
 
@@ -33,7 +35,6 @@ public class Flame_Entity : MonoBehaviour {//NetworkBehaviour {
 	}
 	public FlameInventory_Container GetContainer()
 	{
-		var container = GetComponent<FlameInventory_Container>();
 		if (container == null)
 			container = gameObject.AddComponent<FlameInventory_Container>();
 		return container;

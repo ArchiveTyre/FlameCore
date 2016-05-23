@@ -9,7 +9,7 @@ using System.Collections;
  * History:
  * - Created on April 2 2016 By Alexander Björkman
  */
-
+using FlameCore.Controllers;
 
 // TODO: Cooler name XD
 public class Flame_ClickTypeController : Flame_BaseController { 
@@ -31,7 +31,7 @@ public class Flame_ClickTypeController : Flame_BaseController {
 			{
 				
 				// Only if we have not reached our desination.
-				if (hit.transform.gameObject != avatar.transform.gameObject)
+				if (hit.transform.gameObject != Avatar.transform.gameObject)
 				{
 					// Where we clicked. Later set. At first null.
                     Vector3 mapClick = hit.point;
@@ -47,7 +47,7 @@ public class Flame_ClickTypeController : Flame_BaseController {
                     Flame_VectorUtil.LookAtWithSpeed(transform, mapClick, rotationStep);
 
                     // Move.
-                    avatar.transform.position = Vector3.MoveTowards(avatar.transform.position, mapClick , step);
+                    Avatar.transform.position = Vector3.MoveTowards(Avatar.transform.position, mapClick , step);
 				}
 			}
 		

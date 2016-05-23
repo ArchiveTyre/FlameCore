@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using FlameCore.Controllers;
 
-public class Flame_TPSController : Flame_BaseController 
+public class Flame_TPSController : Flame_3DBaseController
 {
 	// If we can look walk and jump in the different directions
 	public bool lookXAxis = true;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using FlameCore.Controllers;
 /*
  * This controller is a simple first person controller,
  * with adjustable speed, look and move axises, acceleration and etc. It can 
@@ -14,7 +15,7 @@ using System.Collections;
 */
 
 [RequireComponent(typeof (Flame_CollisionRegistry), typeof (Rigidbody), typeof (Flame_KeyBindings))]
-public class Flame_FPSController : Flame_BaseController
+public class Flame_FPSController : Flame_3DBaseController
 {
 	// If we can look walk and jump in the different directions
 	public bool lookYAxis = true;
@@ -64,7 +65,11 @@ public class Flame_FPSController : Flame_BaseController
 	// Use this for initialization
 	void Start () 
 	{
-		rotationX = avatarCamera.transform.localRotation.eulerAngles.x;
+		
+		if (bindings == null)
+			bindings = GetComponent<Flame_KeyBindings>();
+		if (avatarCamera)
+			rotationX = avatarCamera.transform.localRotation.eulerAngles.x;
 		registry = GetComponent <Flame_CollisionRegistry> ();
 	}
 
@@ -139,17 +144,21 @@ public class Flame_FPSController : Flame_BaseController
 	// rotate the avatar and the avatar camera based on look movement
 	void Look ()
 	{
+		if (avatarCamera == null)
+		{
+			return;
+		}
 		float hor = Input.GetAxis (bindings.xLook) * lookSpeed * Flame_Math.Raw (lookXAxis);
 		float ver = Input.GetAxis (bindings.yLook) * lookSpeed * Flame_Math.Raw (lookYAxis);
 
 		//Vector3 camRot = avatarCamera.transform.rotation.eulerAngles;
-		Vector3 avatarRot = avatar.transform.eulerAngles;
+		Vector3 avatarRot = Avatar.transform.eulerAngles;
 
 		rotationX += -ver;
 		rotationX = ClampPitch (rotationX);
 		avatarCamera.transform.localRotation = Quaternion.Euler (rotationX, avatarRot.y, avatarRot.z);
 		print (avatarCamera.transform.rotation.eulerAngles.x);
-		avatar.transform.Rotate (0, hor, 0);
+		Avatar.transform.Rotate (0, hor, 0);
 	}
 
 	// Check if we are airborne, and if we are pressing the jump key
