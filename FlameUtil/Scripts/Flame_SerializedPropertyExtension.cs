@@ -18,6 +18,7 @@ public static class SerializedPropertyExtension
 	// Implementation pending...
 	public static object GetValue(this SerializedProperty property)
 	{
+
 		return property.objectReferenceValue;
 		//return null;
 	}

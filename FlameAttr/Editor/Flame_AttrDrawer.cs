@@ -3,6 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.ComponentModel;
 
 [CustomPropertyDrawer(typeof(Flame_Attr))]
 //[CustomEditor(typeof(Flame_Attr))]
@@ -47,20 +48,15 @@ public class Flame_AttrEditor : PropertyDrawer
 			if (GUI.Button(r3, "Add Entry"))
 			{
 
-				// Expand keys and add "key" property to it.
-				var keyValue = property.FindPropertyRelative("_keys");
-				keyValue.arraySize++;
-				var stp = keyValue.GetArrayElementAtIndex(keyValue.arraySize - 1);
-				stp.stringValue = key.stringValue;
+				var entryKey = property.FindPropertyRelative("_entry_key");
+				var entryValue = property.FindPropertyRelative("_entry_value");
 
-				// Expand values and add "value" property to it.
-				var valValue = property.FindPropertyRelative("_values");
-				valValue.arraySize++;
-				var stv = valValue.GetArrayElementAtIndex(valValue.arraySize - 1);
-				stv.stringValue = value.stringValue;
+				entryKey.stringValue = key.stringValue;
+				entryValue.stringValue = value.stringValue;
 
 				// Unselect the button.
 				GUI.FocusControl("");
+				
 			}
 		}
 	}

@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
+using System.ComponentModel;
 
 [Serializable]
 public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
@@ -14,29 +15,40 @@ public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
 	[SerializeField]
 	private List<string> _values = new List<string>();
 
+	private List<Type> _types = new List<Type>();
+
+#if UNITY_EDITOR
+	[SerializeField, HideInInspector]
+	private string _entry_key = "";
+
+	[SerializeField, HideInInspector]
+	private string _entry_value = "";
+
 	#pragma warning disable 169, 414
 	[SerializeField, HideInInspector]
 	private string _current_key = "Foo";
 
 	[SerializeField, HideInInspector]
 	private string _current_value = "Bar";
+#endif
 
-	[SerializeField]
-	public Dictionary<string, string> content;
+	private Dictionary<string, object> content;
 
 	public Flame_Attr()
 	{
-		content = new Dictionary<string, string>();
+		content = new Dictionary<string, object>();
 	}
 
 	public void OnBeforeSerialize()
 	{
 		_keys.Clear();
 		_values.Clear();
+		_types.Clear();
 		foreach (var kvp in content)
 		{
 			_keys.Add(kvp.Key);
-			_values.Add(kvp.Value);
+			_values.Add(kvp.Value.ToString());
+			_types.Add(kvp.Value.GetType());
 		}
 	}
 
@@ -44,14 +56,75 @@ public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
 	{
 		content.Clear();
 		for (int i = 0; i != Math.Min(_keys.Count, _values.Count); i++)
+		{
 			if (_keys[i] != "")
 			{
-				content[_keys[i]] = _values[i];
+
+				if (_types.Count > i)
+				{
+					var conv = TypeDescriptor.GetConverter(_types[i]);
+					content[_keys[i]] = conv.ConvertFrom(_values[i]);
+				}
+				else
+				{
+					content[_keys[i]] = _values[i];
+				}
 			}
 			else
 			{
 				GUI.FocusControl("");
 			}
+		}
+
+#if UNITY_EDITOR
+		// Check if we should add a new entry!
+		if (_entry_key != "")
+		{
+
+			// Convert to the right type...
+			double d = 0f;
+			bool b = false;
+
+			if (double.TryParse(_entry_value, out d))
+				content[_entry_key] = d;
+			else if (bool.TryParse(_entry_value, out b))
+				content[_entry_key] = b;
+			else
+				content[_entry_key] = _entry_value;
+
+			// Reset
+			_entry_key = "";
+		}
+#endif
+	}
+
+	public Dictionary<string, object>  GetContent()
+	{
+		return content;
+	}
+
+	public object this[string index]
+	{
+
+		// Read one byte at offset index and return it.
+		get
+		{
+			return content[index];
+		}
+
+		set
+		{
+			content[index] = value;
+			
+		}
+	}
+
+	public int Count
+	{
+		get
+		{
+			return content.Count;
+		}
 	}
 
 	void OnGUI()
@@ -61,79 +134,81 @@ public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
 			GUILayout.Label("Key: " + kvp.Key + " value: " + kvp.Value);
 	}
 
-	private static string addTwoStringEntries(string a, string b)
+	/*private static object DetectAndConvert(string stringValue)
 	{
-
-		if (a == "true" && b == "false")
+		var expectedTypes = new List<Type> { typeof(DateTime),typeof(float), typeof(int), typeof(bool), typeof(string) };
+		foreach (var type in expectedTypes)
 		{
-			return "true";
+			TypeConverter converter = TypeDescriptor.GetConverter(type);
+			if (converter.CanConvertFrom(typeof(string)))
+			{
+				try
+				{
+					// You'll have to think about localization here
+					object newValue = converter.ConvertFromInvariantString(stringValue);
+					if (newValue != null)
+					{
+						return newValue;
+					}
+				}
+				catch
+				{
+					// Can't convert given string to this type
+					continue;
+				}
+
+			}
 		}
 
-		if (b == "true" && a == "false")
+		return null;
+	}*/
+	
+	private static object AddTwoObjects(object a, object b)
+	{
+		if (a is string & b != null)
 		{
-			return "true";
-		}
 
-		if (b == "true" && a == "true")
-		{
-			return "true";
+			return a as string + b.ToString();
 		}
-
-		if (b == "false" && a == "false")
+		if (a is bool & b is bool)
 		{
-			return "false";
+			return (bool)a | (bool)b;
 		}
-
-		// Try to convert a
-		float j;
-		float k;
-
-		if (float.TryParse(a, out j) && float.TryParse(b, out k))
+		if (a.IsNumericType() & b.IsNumericType())
 		{
-			return "" + (j + k);
+			double x = Convert.ToDouble(a);
+			double y = Convert.ToDouble(b);
+			return x + y;
 		}
-		else
-		{
-			return a + b;
-		}
+		return null;
 	}
 
-	private static string minusTwoStringEntries(string a, string b)
+	private static object MinusTwoObjects(object a, object b)
 	{
-
-		if (a == "true" && b == "true")
+		if (a is string & b != null)
 		{
-			return "false";
-		}
 
-		if (a == "true" && b == "false")
-		{
-			return "true";
+			return (a as string).Replace(b.ToString(), "");
 		}
+		if (a is bool & b is bool)
+		{
+			int x = (bool)a ? 1 : 0;
+			int y = (bool)b ? 1 : 0;
 
-		if (a == "false" && b == "false")
-		{
-			return "false";
+			if (x > y)
+				return true;
+			else
+				return false;
 		}
-
-		if (a == "false" && b == "true")
+		if (a.IsNumericType() & b.IsNumericType())
 		{
-			return "false";
+			double x = Convert.ToDouble(a);
+			double y = Convert.ToDouble(b);
+			return x - y;
 		}
-
-		// Try to convert a
-		float j;
-		float k;
-
-		if (float.TryParse(a, out j) && float.TryParse(b, out k))
-		{
-			return (j - k).ToString();
-		}
-		else
-		{
-			return a.Replace(b, "");
-		}
+		return null;
 	}
+
 	public static Flame_Attr operator +(Flame_Attr a1, Flame_Attr a2)
 	{
 		Flame_Attr a3 = a1.Clone();
@@ -141,13 +216,13 @@ public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
 
 		foreach(var entry in a1.content)
 		{
-			string a = "";
+			object a = null;
 			if (a1.content.ContainsKey(entry.Key))
 				 a = a1.content[entry.Key];
-			string b = "";
+			object b = null;
 			if (a2.content.ContainsKey(entry.Key))
 				b = a2.content[entry.Key];
-			a3.content[entry.Key] = addTwoStringEntries(a, b);
+			a3.content[entry.Key] = AddTwoObjects(a, b);
 		}
 
 		return a3;
@@ -161,13 +236,13 @@ public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
 
 		foreach (var entry in a1.content)
 		{
-			string a = "";
+			object a = null;
 			if (a1.content.ContainsKey(entry.Key))
 				a = a1.content[entry.Key];
-			string b = "";
+			object b = null;
 			if (a2.content.ContainsKey(entry.Key))
 				b = a2.content[entry.Key];
-			a3.content[entry.Key] = minusTwoStringEntries(a, b);
+			a3.content[entry.Key] = MinusTwoObjects(a, b);
 		}
 
 		return a3;
@@ -177,11 +252,14 @@ public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
 	public Flame_Attr Clone()
 	{
 		Flame_Attr a1 = new Flame_Attr();
-		a1.content = new Dictionary<string, string>(this.content.Count, this.content.Comparer);
+		a1.content = new Dictionary<string, object>(this.content.Count, this.content.Comparer);
 
-		foreach (KeyValuePair<string, string> entry in this.content)
+		foreach (KeyValuePair<string, object> entry in this.content)
 		{
-			a1.content.Add(entry.Key, (string)entry.Value.Clone());
+			if (entry.Value != null && entry.Value is ICloneable)
+				a1.content.Add(entry.Key, (entry.Value as ICloneable).Clone());
+			else
+				a1.content.Add(entry.Key, entry.Value);
 		}
 
 		return a1;

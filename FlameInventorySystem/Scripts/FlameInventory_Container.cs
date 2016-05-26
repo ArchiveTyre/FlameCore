@@ -184,40 +184,6 @@ public class Flame_Item : IComparable
 		}
 	}
 
-	// Returns all the Stat names.
-	public string[] GetStatNames()
-	{
-		// Create a array.
-		string[] lstats = new string[stats.content.Count];
-
-		// Create a counter.
-		int i = 0;
-
-		// Then cycle through all vars.
-		foreach (string s in stats.content.Keys)
-		{
-
-			// Set the vars.
-			lstats[i] = s;
-
-			// Increment the counter.
-			i++;
-		}
-		return lstats;
-
-	}
-
-	public void SetStat(string statName, int value)
-	{
-		stats.content[statName] = ""+value;
-	}
-
-	// Returns an T.
-	public string GetStat (string statName)
-	{
-		return stats.content[statName];
-	}
-
 	public int CompareTo(object obj)
 	{
 		if (obj == this)
