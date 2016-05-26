@@ -9,6 +9,10 @@ using System.ComponentModel;
 public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
 {
 
+	public delegate void DelOnChange(Flame_Attr self);
+	public event DelOnChange OnChange;
+
+
 	[SerializeField]
 	private List<string> _keys = new List<string>();
 
@@ -100,6 +104,8 @@ public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
 
 	public Dictionary<string, object>  GetContent()
 	{
+		if (OnChange != null)
+			OnChange(this);
 		return content;
 	}
 
@@ -114,6 +120,8 @@ public class Flame_Attr : ICloneable, ISerializationCallbackReceiver
 
 		set
 		{
+			if (OnChange != null && content[index] != value)
+				OnChange(this);
 			content[index] = value;
 			
 		}

@@ -6,10 +6,9 @@ using System.Reflection;
 using System.ComponentModel;
 
 [CustomPropertyDrawer(typeof(Flame_Attr))]
-//[CustomEditor(typeof(Flame_Attr))]
 public class Flame_AttrEditor : PropertyDrawer
 {
-
+	
 	public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
 	{
 		if (property.isExpanded)

@@ -1,29 +1,27 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using System.Collections;
 
-public class Flame_AttrDisplay : NetworkBehaviour {
+public class Flame_AttrDisplay : /*MonoBehaviour*/ NetworkBehaviour {
 
-	Flame_Attr attr;
+	[SerializeField]
+	public Flame_Attr attr = new Flame_Attr();
+
+	public bool isAttrLocal = false;
+	public Text text = null;
 
 	public string key;
 
-	[SyncVar]
+	[SyncVar, ShowOnly]
 	public string value;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-
-	[ClientCallback]
-	// Update is called once per frame
-	void Update () {
-
-		if (isServer )
-		{
-
-		}
+	void Update ()
+	{
+		if (isServer || isAttrLocal)
+		if (attr[key].ToString() != value)
+			value = attr[key].ToString();
+		text.text = value;
 	}
 
 }
