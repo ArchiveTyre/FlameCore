@@ -6,7 +6,7 @@ using System.Collections;
  * CopyRight 2016 (c) All rights reserved by Flame___
  * Description:
  * - This class contains enums that are standradised of Flame
- * - Please follow this standard: EnumTo<TYPE> all FlameCore devs.
+ * - Please follow this standard: EnumTo<TYPE>, all FlameCore devs.
  * - Also please make all moste commenly used enums the first once you check. And use cases.
  * History:
  * - Created on April 2 2016 By Alexander Björkman
@@ -18,22 +18,28 @@ public class Flame_Enums {
     // Polar means yes -- no question.
     public enum UndefinedPolar
     {
-        UNDEFINED,
-        YES,
-        NO
+        UNDEFINED = -1,
+        YES = 1,
+        NO = 0
     }
+
+	public enum GameType
+	{
+		MULTIPLAYER,
+		SINGLEPLAYER,
+	}
 
     // Mono Means "one". So this enum can only go in 1D.
     public enum MonoDirection
     {
         // Going forward
-        FORWARD,
+        FORWARD = 1,
 
         // Has stopped. Probably has completed.
-        STOP,
+        STOP = 0,
 
         // Going back
-        BACKWARD,
+        BACKWARD = -1,
     }
 
 	public enum Direction3D

@@ -33,7 +33,7 @@ public class Flame_TPSController : Flame_3DBaseController
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	override protected void MoveUpdate () 
 	{
 		Move ();
 		Look ();

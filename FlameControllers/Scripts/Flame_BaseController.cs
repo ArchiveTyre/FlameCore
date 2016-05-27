@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 /*
@@ -14,7 +15,8 @@ using System.Collections;
  */
 namespace FlameCore.Controllers
 {
-	public class Flame_BaseController : MonoBehaviour
+	[AddComponentMenu("")]
+	public class Flame_BaseController : NetworkBehaviour
 	{
 
 		// the keybindings to use the correct keys
@@ -33,6 +35,7 @@ namespace FlameCore.Controllers
 			{
 				return avatar;
 			}
+
 			set
 			{
 				avatar = value;
@@ -50,17 +53,33 @@ namespace FlameCore.Controllers
 		// The speed of rotation
 		public float rotationSpeed = 1f;
 
+		/// <summary>
+		/// This function will set some objects
+		/// and disable self if not local player.
+		///  </summary>
 		virtual protected void SetupBase()
 		{
-			if (Avatar == null)
-			{
-				Debug.LogError("Start Avatar not set");
+			if (Avatar == null) {
+				Debug.LogError("Avatar not set, using gameObject as Avatar");
 				Avatar = gameObject;
 			}
 
 			if (bindings == null)
 				bindings = gameObject.AddComponent<Flame_KeyBindings>();
 
+		}
+
+		virtual protected void MoveUpdate()
+		{
+			
+		}
+
+		void Update()
+		{
+			if (isLocalPlayer)
+			{
+				MoveUpdate();
+			}	
 		}
 
 		// THIS METHOD MUST BE CALLED AT THE START METHOD OF ANY CONTROLLER IF IT WANTS TO ACCES Avatar or avatar_rigidbody

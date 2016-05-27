@@ -74,7 +74,7 @@ public class Flame_FPSController : Flame_3DBaseController
 	}
 
 	// Update is called once per frame
-	void Update ()
+	override protected void MoveUpdate ()
 	{
 		GetInput ();
 		Move ();

@@ -16,8 +16,8 @@ public class Flame_ClickTypeController : Flame_BaseController {
 	
 	// The object that will show where the avatar is headed.
 	public GameObject destinationCursor;
-	
-	void Update () {
+
+	protected override void MoveUpdate () {
 		if (Input.GetMouseButton(0))
 		{
 			// Enable the destination cursor
